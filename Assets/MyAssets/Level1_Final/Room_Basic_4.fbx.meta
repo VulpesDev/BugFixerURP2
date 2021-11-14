@@ -80,7 +80,7 @@ ModelImporter:
       name: Wall.001
     second: {fileID: 2100000, guid: a24c2564be9712240968ae22cc941752, type: 2}
   materials:
-    materialImportMode: 2
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
