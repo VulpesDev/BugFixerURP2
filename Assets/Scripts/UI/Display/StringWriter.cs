@@ -10,7 +10,7 @@ public class StringWriter : MonoBehaviour
     [SerializeField]float latency = 0.01f, delay = 0.0f;
     string input;
     public bool ready = false;
-    void Start()
+    void OnEnable()
     {
         text = GetComponent<Text>();
         input = text.text; // gets the input

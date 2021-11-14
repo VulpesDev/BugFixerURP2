@@ -18,17 +18,21 @@ public class Results : MonoBehaviour
     }
     void Start()
     {
-        popups_Panel = transform.parent.GetChild(2).GetComponent<PopUps>();
+        popups_Panel = transform.parent.GetChild(3).GetComponent<PopUps>();
         current.text = popups_Panel.SuccessRate().ToString("F0") + "%";
         target.text = popups_Panel.percentage.ToString() + "%";
         if(popups_Panel.passed)
             current.color = Color.green;
         else
             current.color = Color.red;
-        Invoke("TurnOff", 1.5f);
+        //After the end
+        Invoke("Exit", 1f);
     }
-    void TurnOff()
+    public void Exit()
     {
-        transform.parent.GetComponent<MonitorManager>().TurnMonitor("Off");
+        if(transform.parent.name == "Monitor_CanvasL")
+        transform.parent.parent.parent.GetComponent<MonitorsStages>().ResetMinigameL();
+        else
+            transform.parent.parent.parent.GetComponent<MonitorsStages>().ResetMinigameR();
     }
 }
