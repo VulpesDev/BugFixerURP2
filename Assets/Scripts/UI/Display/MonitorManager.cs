@@ -7,7 +7,6 @@ public class MonitorManager : MonoBehaviour
     StagesManager[] childrenTr;
     GameObject[] children;
 
-    public bool running = true; // to be changed to FALSE!!
     void Awake()
     {
         TrToGo();
@@ -20,36 +19,13 @@ public class MonitorManager : MonoBehaviour
     void Update()
     {
         CheckStages();
-        gameObject.SetActive(running);
-        //if (running && GameObject.FindGameObjectWithTag("Player").GetComponent<Character>().enabled)
-        //{
-        //    GameObject.FindGameObjectWithTag("Player").GetComponent<Character>().enabled = false;
-        //}
-        //else
-        //{
-        //    GameObject.FindGameObjectWithTag("Player").GetComponent<Character>().enabled = true;
-        //}
-
-    }
-
-    public void TurnMonitor(string state)
-    {
-        switch(state)
-        {
-            case "On":
-                running = true;
-                break;
-            default:
-                running = false;
-                break;
-        }
     }
 
     void CheckStages()
     {
         for (int i = 0; i < children.Length; i++)
         {
-            if(children[i].GetComponent<StagesManager>().ready() && children[i].activeSelf)
+            if (children[i].GetComponent<StagesManager>().ready() && children[i].activeSelf)
             {
                 StartCoroutine(FromStageTo(i, i + 1, 0.2f));
             }

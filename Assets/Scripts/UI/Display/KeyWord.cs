@@ -21,7 +21,6 @@ public class KeyWord : MonoBehaviour
         string key = RandomString(1);
         requested = string2Keys[key];
         frontText.text = key;
-        rtr_Loading = transform.GetChild(1).GetComponent<RectTransform>();
         Debug.Log(key + " " + requested);
 
         MusicManager.PopUpUI();

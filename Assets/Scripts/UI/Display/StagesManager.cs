@@ -19,7 +19,8 @@ public class StagesManager : MonoBehaviour
                 {
                     if (!transform.GetChild(1).GetComponent<InputLine>().correct)
                     {
-                        transform.parent.GetComponent<MonitorManager>().TurnMonitor("Off");
+                        transform.parent.GetChild(4).GetComponent<Results>().Exit();
+                        //what to do if not correct
                     }
                     return true;
                 }
@@ -31,9 +32,20 @@ public class StagesManager : MonoBehaviour
                     return true;
                 }
                 else return false;
+            case 3:
+                if (GetComponent<StatusManager>().ready)
+                {
+                    return true;
+                }
+                else return false;
             default:
                 return false;
         }
+    }
+
+    void Exit()
+    {
+
     }
 
     int Cases()
@@ -41,6 +53,7 @@ public class StagesManager : MonoBehaviour
         if (name == "FirstStage_Panel") return 0;
         else if (name == "SecondStage_Panel") return 1;
         else if (name == "PopUps_Panel") return 2;
-        else return 3;
+        else if (name == "Status") return 3;
+        else return 4;
     }
 }
