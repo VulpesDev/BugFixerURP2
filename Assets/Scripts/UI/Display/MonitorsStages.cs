@@ -8,16 +8,19 @@ public class MonitorsStages : MonoBehaviour
     public bool broken = false;
     bool rebooting = false;
     public GameObject[] statuses = new GameObject[3];
+    AudioSource alarmAS;
 
     private void Awake()
     {
         SetStatuses();
+        alarmAS = transform.GetChild(3).GetComponent<AudioSource>();
     }
     void Update()
     {
         if (rebooting) return;
         if(broken)
         {
+            if (!alarmAS.isPlaying) alarmAS.Play();
             for (int i = 0; i < statuses.Length; i++)
             {
                 statuses[i].transform.GetChild(0).gameObject.SetActive(true);
@@ -26,6 +29,7 @@ public class MonitorsStages : MonoBehaviour
         }
         else
         {
+            if (alarmAS.isPlaying) alarmAS.Stop();
             for (int i = 0; i < statuses.Length; i++)
             {
                 statuses[i].transform.GetChild(0).gameObject.SetActive(false);
