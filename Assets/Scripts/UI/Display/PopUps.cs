@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class PopUps : MonoBehaviour
 {
-    [Header("Difficulty")] [SerializeField] int speed = 150;
-    [Range(1, 13)] public int popups;
-    [Range(0, 100)] public float percentage;
+    DifficultyManager dm;
+    int speed;
+    int popups;
+    public float percentage;
     KeyWord[] panelsTr;
     GameObject[] panels;
     [HideInInspector]public bool ready, passed;
     void Awake()
     {
+        dm = GameObject.FindGameObjectWithTag("Difficulty").GetComponent<DifficultyManager>();
+        speed = dm.speed; popups = dm.popups; percentage = dm.percentage;
         TrToGo();
         HidePanels();
         SetSpeedToKeyWord();

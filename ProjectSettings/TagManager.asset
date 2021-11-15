@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Monitor
+  - Difficulty
+  - ServerMonitor
   layers:
   - Default
   - TransparentFX
