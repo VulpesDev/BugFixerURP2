@@ -332,7 +332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rayTr: {fileID: 2319909482272104032}
-  distance: 1
+  distance: 2
   layerCode:
     serializedVersion: 2
     m_Bits: 32
@@ -479,8 +479,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 440c1b8dc8b037944bc8cf36be3245fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 450
-  popups: 13
+  speed: 150
+  popups: 3
   percentage: 70
 --- !u!4 &407701435
 Transform:

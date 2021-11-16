@@ -6,6 +6,7 @@ public class MonitorManager : MonoBehaviour
 {
     StagesManager[] childrenTr;
     GameObject[] children;
+    
 
     void Awake()
     {
@@ -19,6 +20,7 @@ public class MonitorManager : MonoBehaviour
     void Update()
     {
         CheckStages();
+
     }
 
     void CheckStages()

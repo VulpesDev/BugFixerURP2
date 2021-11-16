@@ -9,11 +9,16 @@ public class MonitorsStages : MonoBehaviour
     bool rebooting = false;
     public GameObject[] statuses = new GameObject[3];
     AudioSource alarmAS;
+    Material matA, matB;
+    Color colorDefault;
 
     private void Awake()
     {
         SetStatuses();
         alarmAS = transform.GetChild(3).GetComponent<AudioSource>();
+        matA = transform.parent.GetComponent<MeshRenderer>().materials[2];
+        matB = transform.parent.GetChild(0).GetComponent<MeshRenderer>().materials[0];
+        colorDefault = matA.GetColor("_EmissionColor");
     }
     void Update()
     {
@@ -21,6 +26,7 @@ public class MonitorsStages : MonoBehaviour
         if(broken)
         {
             if (!alarmAS.isPlaying) alarmAS.Play();
+            matA.SetColor("_EmissionColor", Color.red); matB.SetColor("_EmissionColor", Color.red);
             for (int i = 0; i < statuses.Length; i++)
             {
                 statuses[i].transform.GetChild(0).gameObject.SetActive(true);
@@ -30,6 +36,7 @@ public class MonitorsStages : MonoBehaviour
         else
         {
             if (alarmAS.isPlaying) alarmAS.Stop();
+            matA.SetColor("_EmissionColor", colorDefault); matB.SetColor("_EmissionColor", colorDefault);
             for (int i = 0; i < statuses.Length; i++)
             {
                 statuses[i].transform.GetChild(0).gameObject.SetActive(false);
