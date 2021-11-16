@@ -85,7 +85,8 @@ public class CharacterVR : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.LeftShift))
         {
-            AddImpact(transform.forward, dashForce);
+
+            AddImpact((Input.GetAxis("Vertical") * forward + Input.GetAxis("Horizontal") * right).normalized, dashForce);
         }
     }
     void DashUpdate()
