@@ -24,12 +24,13 @@ public class CharacterVR : MonoBehaviour
     public bool canLook = true;
 
     int jumps = 0;
-    Impact impactScript;
 
-    float mass = 3.0f; // defines the character mass
+    float mass = 3.0f;
     Vector3 impact = Vector3.zero;
-    CharacterController character;
     float dashForce = 200f;
+
+    float baseHeight;
+    bool sliding = false;
 
     void Start()
     {
@@ -39,21 +40,27 @@ public class CharacterVR : MonoBehaviour
         Cursor.visible = false;
 
         lookSpeedBase = lookSpeed;
-        impactScript = GetComponent<Impact>();
-        character = GetComponent<CharacterController>();
+
+        baseHeight = characterController.height;
     }
+
+    Vector3 forward, right;
 
     void Update()
     {
         DashUpdate();
 
-        Vector3 forward = transform.TransformDirection(Vector3.forward);
-        Vector3 right = transform.TransformDirection(Vector3.right);
+        ImpactUpdate();
+
+        SlideUpdate();
+
+        forward = transform.TransformDirection(Vector3.forward);
+        right = transform.TransformDirection(Vector3.right);
 
         float curSpeedX = canMove ? walkingSpeed * Input.GetAxis("Vertical") : 0;
         float curSpeedY = canMove ? walkingSpeed * Input.GetAxis("Horizontal") : 0;
         float movementDirectionY = moveDirection.y;
-        moveDirection = (forward * curSpeedX) + (right * curSpeedY) ;
+        moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
         if (Input.GetButtonDown("Jump") && canMove && (characterController.isGrounded || jumps < 1))
         {
@@ -82,25 +89,56 @@ public class CharacterVR : MonoBehaviour
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
+    }
 
-        if(Input.GetKeyDown(KeyCode.LeftShift))
+    bool cooldown = false;
+
+    void Slide()
+    {
+        characterController.height = baseHeight / 4;
+        AddImpact(forward, (Mathf.Abs(moveDirection.x) + Mathf.Abs(moveDirection.z)) + dashForce);
+        cooldown = true;
+
+    }
+
+    void SlideUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftControl)) sliding = true; if (Input.GetKeyUp(KeyCode.LeftControl))
         {
+            characterController.height = baseHeight;
+            cooldown = false;
+            sliding = false;
+        }
 
+
+        if (!cooldown && sliding && characterController.isGrounded)
+        {
+            Slide();
+        }
+
+        //canMove = !sliding;
+    }
+
+    /// Dash
+    void DashUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
             AddImpact((Input.GetAxis("Vertical") * forward + Input.GetAxis("Horizontal") * right).normalized, dashForce);
         }
     }
-    void DashUpdate()
+
+
+    void ImpactUpdate()
     {
-        // apply the impact force:
-        if (impact.magnitude > 0.2) character.Move(impact * Time.deltaTime);
-        // consumes the impact energy each cycle:
+        if (impact.magnitude > 0.2) characterController.Move(impact * Time.deltaTime);
         impact = Vector3.Lerp(impact, Vector3.zero, 5 * Time.deltaTime);
     }
 
-    public void AddImpact(Vector3 dir, float force)
+    void AddImpact(Vector3 dir, float force)
     {
         dir.Normalize();
-        if (dir.y < 0) dir.y = -dir.y; // reflect down force on the ground
+        if (dir.y < 0) dir.y = -dir.y;
         impact += dir.normalized * force / mass;
     }
 }
