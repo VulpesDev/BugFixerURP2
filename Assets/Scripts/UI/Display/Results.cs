@@ -9,6 +9,8 @@ public class Results : MonoBehaviour
     PopUps popups_Panel;
     Text current, target;
 
+    Character playerScript;
+
     private void Awake()
     {
         current = transform.GetChild(1).GetComponent<Text>();
@@ -18,6 +20,8 @@ public class Results : MonoBehaviour
     }
     void Start()
     {
+        playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
+
         popups_Panel = transform.parent.GetChild(3).GetComponent<PopUps>();
         current.text = popups_Panel.SuccessRate().ToString("F0") + "%";
         target.text = popups_Panel.percentage.ToString() + "%";
@@ -30,7 +34,10 @@ public class Results : MonoBehaviour
     }
     public void Exit()
     {
-        if(transform.parent.name == "Monitor_CanvasL")
+        playerScript.canMove = true;
+        playerScript.lookSpeed = playerScript.lookSpeedBase;
+
+        if (transform.parent.name == "Monitor_CanvasL")
         transform.parent.parent.parent.GetComponent<MonitorsStages>().ResetMinigameL();
         else
             transform.parent.parent.parent.GetComponent<MonitorsStages>().ResetMinigameR();

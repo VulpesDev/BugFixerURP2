@@ -43,11 +43,6 @@ public class StagesManager : MonoBehaviour
         }
     }
 
-    void Exit()
-    {
-
-    }
-
     int Cases()
     {
         if (name == "FirstStage_Panel") return 0;

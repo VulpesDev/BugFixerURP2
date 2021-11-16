@@ -11,6 +11,7 @@ public class Character : MonoBehaviour
     public float jumpSpeed = 8.0f;
     public float gravity = 20.0f;
     public Camera playerCamera;
+    public float lookSpeedBase;
     public float lookSpeed = 2.0f;
     public float lookXLimit = 45.0f;
 
@@ -20,6 +21,8 @@ public class Character : MonoBehaviour
 
     [HideInInspector]
     public bool canMove = true;
+    [HideInInspector]
+    public bool canLook = true;
 
     void Start()
     {
@@ -27,6 +30,8 @@ public class Character : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        lookSpeedBase = lookSpeed;
     }
 
     void Update()
@@ -56,7 +61,7 @@ public class Character : MonoBehaviour
 
         characterController.Move(moveDirection * Time.deltaTime);
 
-        if (canMove)
+        if (canLook)
         {
             rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
             rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
