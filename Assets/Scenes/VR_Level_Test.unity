@@ -269,18 +269,6 @@ MonoBehaviour:
   lookXLimit: 45
   canMove: 1
   canLook: 1
---- !u!114 &981707921
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 981707917}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d88a7ef40f2e924f8f6ac9473a87443, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!64 &1595034905
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -306,6 +294,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5967700170613499471, guid: 29ac830ce71dd7f4f998d1278203639e, type: 3}
+      propertyPath: m_Height
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5967700170613499473, guid: 29ac830ce71dd7f4f998d1278203639e, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -316,7 +308,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5967700170613499473, guid: 29ac830ce71dd7f4f998d1278203639e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.925
+      value: 1.002
       objectReference: {fileID: 0}
     - target: {fileID: 5967700170613499473, guid: 29ac830ce71dd7f4f998d1278203639e, type: 3}
       propertyPath: m_LocalPosition.z
