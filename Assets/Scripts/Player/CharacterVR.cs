@@ -7,6 +7,7 @@ using UnityEngine;
 public class CharacterVR : MonoBehaviour
 {
     public float walkingSpeed = 7.5f;
+    float baseWalkingSpeed;
     public float jumpSpeed = 8.0f;
     public float gravity = 20.0f;
     public Camera playerCamera;
@@ -42,6 +43,8 @@ public class CharacterVR : MonoBehaviour
         lookSpeedBase = lookSpeed;
 
         baseHeight = characterController.height;
+
+        baseWalkingSpeed = walkingSpeed;
     }
 
     Vector3 forward, right;
@@ -95,15 +98,16 @@ public class CharacterVR : MonoBehaviour
 
     void Slide()
     {
-        characterController.height = baseHeight / 4;
-        AddImpact(forward, (Mathf.Abs(moveDirection.x) + Mathf.Abs(moveDirection.z)) + dashForce);
+        
+        AddImpact(forward, (Mathf.Abs(moveDirection.x) + Mathf.Abs(moveDirection.z)) * dashForce / walkingSpeed * 0.8f);
         cooldown = true;
 
     }
 
     void SlideUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl)) sliding = true; if (Input.GetKeyUp(KeyCode.LeftControl))
+        if (Input.GetKeyDown(KeyCode.LeftControl)) { sliding = true; characterController.height = baseHeight / 4; }
+        if (Input.GetKeyUp(KeyCode.LeftControl))
         {
             characterController.height = baseHeight;
             cooldown = false;
@@ -116,7 +120,9 @@ public class CharacterVR : MonoBehaviour
             Slide();
         }
 
-        //canMove = !sliding;
+        if (sliding) { if(characterController.isGrounded) walkingSpeed = baseWalkingSpeed / 3;  }
+        else walkingSpeed = baseWalkingSpeed;
+
     }
 
     /// Dash
