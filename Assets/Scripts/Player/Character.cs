@@ -54,12 +54,8 @@ public class Character : MonoBehaviour
             moveDirection.y = movementDirectionY;
         }
 
-        if (!characterController.isGrounded)
-        {
-            moveDirection.y -= gravity * Time.fixedDeltaTime;
-        }
 
-        characterController.Move(moveDirection * Time.fixedDeltaTime);
+        
 
         if (canLook)
         {
@@ -68,5 +64,14 @@ public class Character : MonoBehaviour
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
+    }
+    private void FixedUpdate()
+    {
+
+        if (!characterController.isGrounded)
+        {
+            moveDirection.y -= gravity * Time.fixedDeltaTime;
+        }
+        characterController.Move(moveDirection * Time.fixedDeltaTime);
     }
 }
