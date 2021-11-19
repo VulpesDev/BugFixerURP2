@@ -535,10 +535,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dot: {fileID: 537743699}
   rotationSpeedBase: 0.01
-  rotationAcc: 2
+  rotationAcc: 3
   dot2: {fileID: 149135534}
   positionSpeedBase: 0.1
-  positionAcc: 5
+  positionAcc: 7
 --- !u!1 &2109188585 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5967700171016420147, guid: 29ac830ce71dd7f4f998d1278203639e, type: 3}
