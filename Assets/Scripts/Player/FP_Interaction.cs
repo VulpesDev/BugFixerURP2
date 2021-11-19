@@ -19,7 +19,8 @@ public class FP_Interaction : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.E))
             {
-                if(target.CompareTag("Monitor") && targetTr.parent.parent.GetComponent<MonitorsStages>().broken)
+                if(target.CompareTag("Monitor") && targetTr.parent.parent.GetComponent<MonitorsStages>()
+                    .broken)
                 {
                     targetTr.GetChild(0).GetComponent<StatusManager>().PlayMinigame();
                 }

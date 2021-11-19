@@ -255,7 +255,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 227567875192451980, guid: ea45031cc5bd10849aabc77c7a0bea07, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.00001
+      value: -0.00005
       objectReference: {fileID: 0}
     - target: {fileID: 227567875192451980, guid: ea45031cc5bd10849aabc77c7a0bea07, type: 3}
       propertyPath: m_LocalPosition.y
@@ -316,9 +316,11 @@ MonoBehaviour:
   jumpSpeed: 8
   gravity: 20
   playerCamera: {fileID: 5967700170347005282}
+  lookSpeedBase: 0
   lookSpeed: 2
   lookXLimit: 45
   canMove: 1
+  canLook: 1
 --- !u!114 &270874105
 MonoBehaviour:
   m_ObjectHideFlags: 0

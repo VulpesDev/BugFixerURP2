@@ -7,6 +7,7 @@ using UnityEngine;
 public class CharacterVR : MonoBehaviour
 {
     public float walkingSpeed = 7.5f;
+    float baseWalkingSpeed;
     public float jumpSpeed = 8.0f;
     public float gravity = 20.0f;
     public Camera playerCamera;
@@ -29,6 +30,9 @@ public class CharacterVR : MonoBehaviour
     Vector3 impact = Vector3.zero;
     float dashForce = 200f;
 
+    Vector3 slideImpact = Vector3.zero;
+    float slideForce = 55f;
+
     float baseHeight;
     bool sliding = false;
 
@@ -42,6 +46,8 @@ public class CharacterVR : MonoBehaviour
         lookSpeedBase = lookSpeed;
 
         baseHeight = characterController.height;
+
+        baseWalkingSpeed = walkingSpeed;
     }
 
     Vector3 forward, right;
@@ -53,6 +59,8 @@ public class CharacterVR : MonoBehaviour
         ImpactUpdate();
 
         SlideUpdate();
+
+        SlideImpactUpdate();
 
         forward = transform.TransformDirection(Vector3.forward);
         right = transform.TransformDirection(Vector3.right);
@@ -74,13 +82,13 @@ public class CharacterVR : MonoBehaviour
 
         if (!characterController.isGrounded)
         {
-            moveDirection.y -= gravity * Time.deltaTime;
+            moveDirection.y -= gravity * Time.fixedDeltaTime;
         }
         else
             if (jumps != 0) jumps = 0;
 
 
-        characterController.Move(moveDirection * Time.deltaTime);
+        characterController.Move(moveDirection * Time.fixedDeltaTime);
 
         if (canLook)
         {
@@ -95,15 +103,17 @@ public class CharacterVR : MonoBehaviour
 
     void Slide()
     {
-        characterController.height = baseHeight / 4;
-        AddImpact(forward, (Mathf.Abs(moveDirection.x) + Mathf.Abs(moveDirection.z)) + dashForce);
+        
+        SlideAddImpact(forward, (Mathf.Abs(moveDirection.x) + Mathf.Abs(moveDirection.z))
+            * slideForce / walkingSpeed * 0.8f);
         cooldown = true;
 
     }
 
     void SlideUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl)) sliding = true; if (Input.GetKeyUp(KeyCode.LeftControl))
+        if (Input.GetKeyDown(KeyCode.LeftControl)) { sliding = true; characterController.height = baseHeight / 4; }
+        if (Input.GetKeyUp(KeyCode.LeftControl))
         {
             characterController.height = baseHeight;
             cooldown = false;
@@ -116,7 +126,9 @@ public class CharacterVR : MonoBehaviour
             Slide();
         }
 
-        //canMove = !sliding;
+        if (sliding) { if(characterController.isGrounded) walkingSpeed = baseWalkingSpeed / 3;  }
+        else walkingSpeed = baseWalkingSpeed;
+
     }
 
     /// Dash
@@ -131,8 +143,8 @@ public class CharacterVR : MonoBehaviour
 
     void ImpactUpdate()
     {
-        if (impact.magnitude > 0.2) characterController.Move(impact * Time.deltaTime);
-        impact = Vector3.Lerp(impact, Vector3.zero, 5 * Time.deltaTime);
+        if (impact.magnitude > 0.2) characterController.Move(impact * Time.fixedDeltaTime);
+        impact = Vector3.Lerp(impact, Vector3.zero, 5 * Time.fixedDeltaTime);
     }
 
     void AddImpact(Vector3 dir, float force)
@@ -140,5 +152,18 @@ public class CharacterVR : MonoBehaviour
         dir.Normalize();
         if (dir.y < 0) dir.y = -dir.y;
         impact += dir.normalized * force / mass;
+    }
+
+    void SlideImpactUpdate()
+    {
+        if (slideImpact.magnitude > 0.2) characterController.Move(slideImpact * Time.fixedDeltaTime);
+        slideImpact = Vector3.Lerp(slideImpact, Vector3.zero, 1 * Time.fixedDeltaTime);
+    }
+
+    void SlideAddImpact(Vector3 dir, float force)
+    {
+        dir.Normalize();
+        if (dir.y < 0) dir.y = -dir.y;
+        slideImpact += dir.normalized * force / mass;
     }
 }
