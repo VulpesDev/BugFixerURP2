@@ -27,6 +27,8 @@ public class GunPositioning : MonoBehaviour
 
         pistolHolder = transform.parent.GetChild(2).gameObject;
         dot2.transform.position = pistolHolder.transform.position;
+
+
     }
     void FixedUpdate()
     {

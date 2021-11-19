@@ -1012,8 +1012,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0942113cfa4201640b21fe8a714def19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 150
-  popups: 3
   percentage: 70
   ready: 0
   passed: 0

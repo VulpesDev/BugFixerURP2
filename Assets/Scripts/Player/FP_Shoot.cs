@@ -9,10 +9,14 @@ public class FP_Shoot : MonoBehaviour
     Vector3 rayOrigin = new Vector3(0.5f, 0.5f, 0f); // center of the screen
     float rayLength = 500f;
 
+    ParticleSystem muzzleFlash;
+
     private void Start()
     {
         pistol = transform.GetChild(1).gameObject;
         pistolAnime = pistol.transform.GetChild(0).GetComponent<Animator>();
+
+        muzzleFlash = transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<ParticleSystem>();
     }
 
     private void Update()
@@ -33,6 +37,7 @@ public class FP_Shoot : MonoBehaviour
 
     void Shoot(RaycastHit hitPos)
     {
+        muzzleFlash.Play();
         GameObject hole = Resources.Load<GameObject>("Player/Shooting/BulletHole");
         GameObject instHole = Instantiate(hole, hitPos.point, Quaternion.LookRotation(hitPos.normal));
         instHole.transform.position += instHole.transform.forward * 0.1f;
