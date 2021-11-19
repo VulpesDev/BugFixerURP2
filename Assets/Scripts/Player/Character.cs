@@ -56,10 +56,10 @@ public class Character : MonoBehaviour
 
         if (!characterController.isGrounded)
         {
-            moveDirection.y -= gravity * Time.deltaTime;
+            moveDirection.y -= gravity * Time.fixedDeltaTime;
         }
 
-        characterController.Move(moveDirection * Time.deltaTime);
+        characterController.Move(moveDirection * Time.fixedDeltaTime);
 
         if (canLook)
         {
