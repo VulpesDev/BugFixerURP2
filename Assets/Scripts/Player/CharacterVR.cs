@@ -158,6 +158,7 @@ public class CharacterVR : MonoBehaviour
 
     void SlideImpactFixedUpdate()
     {
+        if (!sliding) slideImpact = Vector3.zero;
         if (slideImpact.magnitude > 0.2) characterController.Move(slideImpact * Time.fixedDeltaTime);
         slideImpact = Vector3.Lerp(slideImpact, Vector3.zero, 1 * Time.fixedDeltaTime);
     }
