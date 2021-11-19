@@ -31,7 +31,7 @@ public class CharacterVR : MonoBehaviour
     float dashForce = 200f;
 
     Vector3 slideImpact = Vector3.zero;
-    float slideForce = 55f;
+    float slideForce = 75f;
 
     float baseHeight;
     bool sliding = false;
@@ -56,11 +56,9 @@ public class CharacterVR : MonoBehaviour
     {
         DashUpdate();
 
-        ImpactUpdate();
 
         SlideUpdate();
 
-        SlideImpactUpdate();
 
         forward = transform.TransformDirection(Vector3.forward);
         right = transform.TransformDirection(Vector3.right);
@@ -80,15 +78,7 @@ public class CharacterVR : MonoBehaviour
             moveDirection.y = movementDirectionY;
         }
 
-        if (!characterController.isGrounded)
-        {
-            moveDirection.y -= gravity * Time.fixedDeltaTime;
-        }
-        else
-            if (jumps != 0) jumps = 0;
 
-
-        characterController.Move(moveDirection * Time.fixedDeltaTime);
 
         if (canLook)
         {
@@ -97,6 +87,18 @@ public class CharacterVR : MonoBehaviour
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
+    }
+    private void FixedUpdate()
+    {
+        if (!characterController.isGrounded)
+        {
+            moveDirection.y -= gravity * Time.fixedDeltaTime;
+        }
+        else
+    if (jumps != 0) jumps = 0;
+        characterController.Move(moveDirection * Time.fixedDeltaTime);
+        ImpactFixedUpdate();
+        SlideImpactFixedUpdate();
     }
 
     bool cooldown = false;
@@ -141,7 +143,7 @@ public class CharacterVR : MonoBehaviour
     }
 
 
-    void ImpactUpdate()
+    void ImpactFixedUpdate()
     {
         if (impact.magnitude > 0.2) characterController.Move(impact * Time.fixedDeltaTime);
         impact = Vector3.Lerp(impact, Vector3.zero, 5 * Time.fixedDeltaTime);
@@ -154,7 +156,7 @@ public class CharacterVR : MonoBehaviour
         impact += dir.normalized * force / mass;
     }
 
-    void SlideImpactUpdate()
+    void SlideImpactFixedUpdate()
     {
         if (slideImpact.magnitude > 0.2) characterController.Move(slideImpact * Time.fixedDeltaTime);
         slideImpact = Vector3.Lerp(slideImpact, Vector3.zero, 1 * Time.fixedDeltaTime);
