@@ -11,6 +11,8 @@ public class FP_Shoot : MonoBehaviour
 
     ParticleSystem muzzleFlash;
 
+    bool inBurst;
+
 
     private void Start()
     {
@@ -24,19 +26,40 @@ public class FP_Shoot : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            Ray ray = Camera.main.ViewportPointToRay(rayOrigin);
+            Raycast();
+        }
+        else if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            if(!inBurst)
+            StartCoroutine(Burst());
+        }
+    }
 
-            Debug.DrawRay(ray.origin, ray.direction * rayLength, Color.red);
+    IEnumerator Burst()
+    {
+        inBurst = true;
+        for (int i = 0; i < 3; i++)
+        {
+            Raycast();
+            yield return new WaitForSeconds(0.08f);
+        }
+        inBurst = false;
+    }
 
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, rayLength))
-            {
-                ShootHit(hit);
-            }
-            else
-            {
-                Shoot();
-            }
+    void Raycast()
+    {
+        Ray ray = Camera.main.ViewportPointToRay(rayOrigin);
+
+        Debug.DrawRay(ray.origin, ray.direction * rayLength, Color.red);
+
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, rayLength))
+        {
+            ShootHit(hit);
+        }
+        else
+        {
+            Shoot();
         }
     }
 
