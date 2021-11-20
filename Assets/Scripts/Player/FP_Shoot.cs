@@ -11,6 +11,7 @@ public class FP_Shoot : MonoBehaviour
 
     ParticleSystem muzzleFlash;
 
+
     private void Start()
     {
         pistol = transform.GetChild(1).gameObject;
@@ -30,17 +31,25 @@ public class FP_Shoot : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, rayLength))
             {
-                Shoot(hit);
+                ShootHit(hit);
+            }
+            else
+            {
+                Shoot();
             }
         }
     }
 
-    void Shoot(RaycastHit hitPos)
+    void ShootHit(RaycastHit hitPos)
     {
-        muzzleFlash.Play();
+        Shoot();
         GameObject hole = Resources.Load<GameObject>("Player/Shooting/BulletHole");
         GameObject instHole = Instantiate(hole, hitPos.point, Quaternion.LookRotation(hitPos.normal));
         instHole.transform.position += instHole.transform.forward * 0.1f;
+    }
+    void Shoot()
+    {
+        muzzleFlash.Play();
         StartCoroutine(ShootAnim());
     }
 
