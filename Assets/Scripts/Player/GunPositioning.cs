@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class GunPositioning : MonoBehaviour
 {
-    [Header ("Rotation")]
-    [SerializeField]GameObject dot;
+    [Header("Rotation")]
+    [SerializeField] GameObject dot;
     Vector3 screenCenter;
 
     public float rotationSpeedBase, rotationAcc;
@@ -16,6 +16,7 @@ public class GunPositioning : MonoBehaviour
     public float positionSpeedBase, positionAcc;
     Vector3 positionCenter;
     GameObject pistolHolder;
+
 
     void Start()
     {
@@ -46,7 +47,6 @@ public class GunPositioning : MonoBehaviour
         dot2.transform.position = Vector3.Lerp(dot2.transform.position, positionCenter,
             Time.fixedDeltaTime + positionSpeed);
         transform.position = dot2.transform.position;
-
 
     }
 }
