@@ -49,6 +49,7 @@ public class FP_Shoot : MonoBehaviour
     }
     void Shoot()
     {
+        MusicManager.ShootPistol();
         muzzleFlash.Play();
         StartCoroutine(ShootAnim());
     }

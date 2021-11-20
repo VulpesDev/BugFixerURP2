@@ -7,7 +7,8 @@ public class MusicManager : MonoBehaviour
 {
 
     static public Transform ambient, player, interactions;
-    static public AudioSource heartBeat;
+
+    public static bool laser;
 
     public static MusicManager instance;
     private void Awake()
@@ -22,10 +23,39 @@ public class MusicManager : MonoBehaviour
     }
     private void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            laser = !laser;
+        }
     }
 
     #region Player
+
+    static public void ShootPistol()
+    {
+        //GameObject Sound = new GameObject();
+        //Sound.transform.parent = player;
+        //AudioSource ASound = Sound.AddComponent<AudioSource>();
+        //ASound.clip = laser==true ? Resources.Load("Sounds/Player/LaserShot") as AudioClip :
+        //    Resources.Load("Sounds/Player/1911Colt") as AudioClip;
+        ////ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
+        //ASound.pitch = Random.Range(0.9f, 1.2f);
+        //ASound.Play();
+        //Sound.AddComponent<AudiosDefault>();
+
+        for (int i = 0; i <= 1; i++)
+        {
+            GameObject Sound = new GameObject();
+            Sound.transform.parent = player;
+            AudioSource ASound = Sound.AddComponent<AudioSource>();
+            ASound.clip = i == 0 ? Resources.Load("Sounds/Player/LaserShot") as AudioClip :
+                Resources.Load("Sounds/Player/1911Colt") as AudioClip;
+            //ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
+            ASound.pitch = Random.Range(0.9f, 1.2f);
+            ASound.Play();
+            Sound.AddComponent<AudiosDefault>();
+        }
+    }
 
     #endregion
 
