@@ -9,7 +9,7 @@ public class FP_Shoot : MonoBehaviour
     Vector3 rayOrigin = new Vector3(0.5f, 0.5f, 0f); // center of the screen
     float rayLength = 500f;
 
-    ParticleSystem muzzleFlash;
+    ParticleSystem muzzleFlash, pressuredL, pressuredR, heatDistortion;
 
     bool inBurst;
 
@@ -20,6 +20,10 @@ public class FP_Shoot : MonoBehaviour
         pistolAnime = pistol.transform.GetChild(0).GetComponent<Animator>();
 
         muzzleFlash = transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<ParticleSystem>();
+
+        pressuredL = transform.GetChild(1).GetChild(0).GetChild(1).GetComponent<ParticleSystem>();
+        pressuredR = transform.GetChild(1).GetChild(0).GetChild(2).GetComponent<ParticleSystem>();
+        heatDistortion = transform.GetChild(1).GetChild(0).GetChild(3).GetComponent<ParticleSystem>();
     }
 
     private void Update()
@@ -32,6 +36,10 @@ public class FP_Shoot : MonoBehaviour
         {
             if(!inBurst)
             StartCoroutine(Burst());
+        }
+        else if (Input.GetKeyDown(KeyCode.R))
+        {
+            StartCoroutine(Reload());
         }
     }
 
@@ -63,12 +71,49 @@ public class FP_Shoot : MonoBehaviour
         }
     }
 
+    IEnumerator Reload()
+    {
+        pistolAnime.SetBool("Reload", true);
+        yield return new WaitForEndOfFrame();
+        pistolAnime.SetBool("Reload", false);
+
+        MusicManager.ReloadInitialize();
+
+        for (int i = 0; i < 10; i++)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        MusicManager.ReloadSound();
+        MusicManager.AirDischarge();
+        Heat(true);
+        for (int i = 0; i < 4; i++)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        MusicManager.ReloadSound();
+        for (int i = 0; i < 4; i++)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        Stream(true);
+
+    }
+    public void Stream(bool state)
+    {
+        if (state) { pressuredL.Play(); pressuredR.Play(); } else { pressuredL.Stop(); pressuredR.Stop(); }
+    }
+    public void Heat(bool state)
+    {
+        if (state) heatDistortion.Play(); else heatDistortion.Stop();
+    }
+
     void ShootHit(RaycastHit hitPos)
     {
         Shoot();
         GameObject hole = Resources.Load<GameObject>("Player/Shooting/BulletHole");
         GameObject instHole = Instantiate(hole, hitPos.point, Quaternion.LookRotation(hitPos.normal));
-        instHole.transform.position += instHole.transform.forward * 0.1f;
+        instHole.transform.parent = hitPos.collider.transform;
+        instHole.transform.position += instHole.transform.forward * 0.05f;
     }
     void Shoot()
     {

@@ -36,7 +36,7 @@ public class MusicManager : MonoBehaviour
         //GameObject Sound = new GameObject();
         //Sound.transform.parent = player;
         //AudioSource ASound = Sound.AddComponent<AudioSource>();
-        //ASound.clip = laser==true ? Resources.Load("Sounds/Player/LaserShot") as AudioClip :
+        //ASound.clip = laser == true ? Resources.Load("Sounds/Player/LaserShot") as AudioClip :
         //    Resources.Load("Sounds/Player/1911Colt") as AudioClip;
         ////ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
         //ASound.pitch = Random.Range(0.9f, 1.2f);
@@ -55,6 +55,39 @@ public class MusicManager : MonoBehaviour
             ASound.Play();
             Sound.AddComponent<AudiosDefault>();
         }
+    }
+    static public void AirDischarge()
+    {
+        GameObject Sound = new GameObject();
+        Sound.transform.parent = player;
+        AudioSource ASound = Sound.AddComponent<AudioSource>();
+        ASound.clip = Resources.Load("Sounds/Player/Air_Discharge") as AudioClip;
+        //ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
+        ASound.pitch = Random.Range(0.9f, 1.2f);
+        ASound.Play();
+        Sound.AddComponent<AudiosDefault>();
+    }
+    static public void ReloadSound()
+    {
+        GameObject Sound = new GameObject();
+        Sound.transform.parent = player;
+        AudioSource ASound = Sound.AddComponent<AudioSource>();
+        ASound.clip = Resources.Load("Sounds/Player/ReloadSound") as AudioClip;
+        //ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
+        ASound.pitch = Random.Range(0.9f, 1.2f);
+        ASound.Play();
+        Sound.AddComponent<AudiosDefault>();
+    }
+    static public void ReloadInitialize()
+    {
+        GameObject Sound = new GameObject();
+        Sound.transform.parent = player;
+        AudioSource ASound = Sound.AddComponent<AudioSource>();
+        ASound.clip = Resources.Load("Sounds/Player/ReloadInitialization") as AudioClip;
+        //ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
+        ASound.pitch = Random.Range(0.9f, 1.2f);
+        ASound.Play();
+        Sound.AddComponent<AudiosDefault>();
     }
 
     #endregion
