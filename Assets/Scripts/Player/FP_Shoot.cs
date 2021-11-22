@@ -8,6 +8,7 @@ public class FP_Shoot : MonoBehaviour
     Animator pistolAnime;
     Vector3 rayOrigin = new Vector3(0.5f, 0.5f, 0f); // center of the screen
     float rayLength = 500f;
+    int damage = 10;
 
     ParticleSystem muzzleFlash, pressuredL, pressuredR, heatDistortion;
 
@@ -64,6 +65,7 @@ public class FP_Shoot : MonoBehaviour
         if (Physics.Raycast(ray, out hit, rayLength))
         {
             ShootHit(hit);
+            if (hit.collider.GetComponent<Flesh>() != null) hit.collider.GetComponent<Flesh>().TakeDamage(damage);
         }
         else
         {
