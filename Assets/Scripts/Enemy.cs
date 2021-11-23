@@ -20,6 +20,8 @@ public class Enemy : MonoBehaviour
 
     Flesh flesh;
     float firerate;
+    int accuracy;
+    int damage;
 
     private void Awake()
     {
@@ -32,6 +34,7 @@ public class Enemy : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         maxDistance = Random.Range(maxDistanceA, maxDistanceB);
         StartCoroutine(SetDestinationCheck());
+        if (typeEnemy == Enemy_Behaviour.EnemyType.Shooter) StartCoroutine(Aim());
     }
 
     void Update()
@@ -49,19 +52,48 @@ public class Enemy : MonoBehaviour
         }
         else if (typeEnemy == Enemy_Behaviour.EnemyType.Shooter) ///// Shooter ONLY
         {
-
+            
         }
 
 #if UNITY_EDITOR
         Debugging();
 #endif
     }
+    IEnumerator Aim()
+    {
+        if (HasVision())
+        {
+            yield return new WaitForSeconds(firerate);
+            Shoot();
+        }
+        yield return new WaitForSeconds(0.1f);
+        StartCoroutine(Aim());
+    }
+    public void Shoot()
+    {
+        int percent = Random.Range(0, 101);
+        if(percent<=accuracy && HasVision())
+        {
+            player.GetComponent<Flesh>().TakeDamage(damage);
+        }
+    }
+    bool HasVision()
+    {
+        Vector3 raycastPos = new Vector3(transform.position.x, transform.position.y + 0.5f,
+            transform.position.z);
+        Vector3 direction = player.transform.position - transform.position;
+        direction = direction.normalized;
+        RaycastHit ray;
+        if (Physics.Raycast(raycastPos, direction, out ray) && ray.collider.tag == "Player")
+            return true;
+        else return false;
+    }
 
     IEnumerator SetDestinationCheck()
     {
         Vector3 velocity = agent.velocity;
-        if (distance <= maxDistance) agent.SetDestination(transform.position);
-        else agent.SetDestination(player.transform.position);
+        if (distance > maxDistance || !HasVision()) agent.SetDestination(player.transform.position);
+        else agent.SetDestination(transform.position);
         yield return new WaitWhile(() => agent.pathPending);
         agent.velocity = velocity;
         yield return new WaitForSeconds(1f);
@@ -78,15 +110,13 @@ public class Enemy : MonoBehaviour
 
         flesh.health = memory.health;
         firerate = memory.firerate;
+        accuracy = memory.accuracy;
+        damage = memory.damage;
 
         maxDistanceA = memory.keepDistanceA;
         maxDistanceB = memory.keepDistanceB;
 
         explodeDamage = memory.explodeDamage;
-    }
-    public void Shoot()
-    {
-        
     }
     public void Explode()
     {
@@ -99,10 +129,19 @@ public class Enemy : MonoBehaviour
     public bool showDistance;
     public bool showHealth;
     public bool showTarget;
+    public bool showVision;
     void Debugging()
     {
        if(showDistance) Debug.Log(distance);
        if(showHealth) Debug.Log(flesh.health);
        if(showTarget) Debug.Log(agent.steeringTarget);
+       if(showVision)
+        {
+            Color col = Color.red;
+            if (HasVision()) col = Color.green; else col = Color.red;
+            Debug.DrawRay(new Vector3(transform.position.x, transform.position.y + 1,
+            transform.position.z), (player.transform.position - transform.position).normalized *
+                Vector3.Distance(player.transform.position, transform.position), col);
+        }
     }
 }

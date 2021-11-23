@@ -19,10 +19,14 @@ public class Enemy_Behaviour : ScriptableObject
     [Space]
     [Header("Weapon")]
     public float firerate;
+    public int accuracy;
+    public int damage;
+    [Space]
+    [Header("Explosion")]
+    public int explodeDamage;
     [Space]
     [Header("AI")]
     public float keepDistanceA;
     public float keepDistanceB;
-    [Header("Explosion")]
-    public int explodeDamage;
+
 }

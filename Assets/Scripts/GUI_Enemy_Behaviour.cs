@@ -32,9 +32,9 @@ public class GUI_Enemy_Behaviour : Editor
         EditorGUILayout.PropertyField(serializedObject.FindProperty("angularSpeed"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("acceleration"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("health"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("explodeDamage"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("keepDistanceA"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("keepDistanceB"));
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("explodeDamage"));
     }
     void DisplayShooterInfo()
     {
@@ -44,6 +44,8 @@ public class GUI_Enemy_Behaviour : Editor
         EditorGUILayout.PropertyField(serializedObject.FindProperty("acceleration"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("health"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("firerate"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("accuracy"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("damage"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("keepDistanceA"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("keepDistanceB"));
     }
