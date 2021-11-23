@@ -18,7 +18,7 @@ MonoBehaviour:
   acceleration: 5
   health: 100
   firerate: 2
-  accuracy: 60
+  accuracy: 30
   damage: 10
   explodeDamage: 3
   keepDistanceA: 10
