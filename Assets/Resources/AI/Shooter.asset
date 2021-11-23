@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeEnemy: 1
   speed: 8
-  angularSpeed: 180
+  angularSpeed: 220
   acceleration: 5
   health: 100
   firerate: 2
-  keepDistanceA: 15
-  keepDistanceB: 30
+  accuracy: 60
+  damage: 10
   explodeDamage: 3
+  keepDistanceA: 10
+  keepDistanceB: 20
