@@ -9,6 +9,8 @@ public class FP_Shoot : MonoBehaviour
     Vector3 rayOrigin = new Vector3(0.5f, 0.5f, 0f); // center of the screen
     float rayLength = 500f;
     int damage = 10;
+    public int overheat = 0;
+    bool canShoot, isReloading;
 
     ParticleSystem muzzleFlash, pressuredL, pressuredR, heatDistortion;
 
@@ -29,18 +31,26 @@ public class FP_Shoot : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            Raycast();
-        }
-        else if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            if(!inBurst)
-            StartCoroutine(Burst());
-        }
-        else if (Input.GetKeyDown(KeyCode.R))
+        if (overheat > 100) overheat = 100;
+        else if (overheat >= 100) canShoot = false;
+        else canShoot = true;
+
+        if (Input.GetKeyDown(KeyCode.R))
         {
             StartCoroutine(Reload());
+        }
+
+        if (canShoot && !isReloading)
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                Raycast();
+            }
+            else if (Input.GetKeyDown(KeyCode.Mouse1))
+            {
+                if (!inBurst)
+                    StartCoroutine(Burst());
+            }
         }
     }
 
@@ -75,6 +85,8 @@ public class FP_Shoot : MonoBehaviour
 
     IEnumerator Reload()
     {
+        isReloading = true;
+
         pistolAnime.SetBool("Reload", true);
         yield return new WaitForEndOfFrame();
         pistolAnime.SetBool("Reload", false);
@@ -87,6 +99,7 @@ public class FP_Shoot : MonoBehaviour
         }
         MusicManager.ReloadSound();
         MusicManager.AirDischarge();
+        StartCoroutine(Discharge());
         Heat(true);
         for (int i = 0; i < 4; i++)
         {
@@ -99,6 +112,19 @@ public class FP_Shoot : MonoBehaviour
         }
         Stream(true);
 
+        for (int i = 0; i < 32; i++)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        isReloading = false;
+    }
+    IEnumerator Discharge()
+    {
+        while(overheat>0)
+        {
+            overheat--;
+            yield return new WaitForSeconds(0.0035f);
+        }
     }
     public void Stream(bool state)
     {
@@ -119,6 +145,8 @@ public class FP_Shoot : MonoBehaviour
     }
     void Shoot()
     {
+        overheat += 5;
+
         MusicManager.ShootPistol();
         muzzleFlash.Play();
         StartCoroutine(ShootAnim());

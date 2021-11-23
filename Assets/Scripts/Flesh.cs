@@ -11,6 +11,9 @@ public class Flesh : MonoBehaviour
     }
     public void TakeDamage(int amount)
     {
+        if (gameObject.CompareTag("Player"))
+            GameObject.FindGameObjectWithTag("UI_Canvas").GetComponent<FP_UI>().VFX_TakeDamage();
+
         health -= amount;
     }
     void Die()
