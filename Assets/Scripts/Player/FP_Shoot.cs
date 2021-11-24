@@ -85,38 +85,41 @@ public class FP_Shoot : MonoBehaviour
 
     IEnumerator Reload()
     {
-        isReloading = true;
-
-        pistolAnime.SetBool("Reload", true);
-        yield return new WaitForEndOfFrame();
-        pistolAnime.SetBool("Reload", false);
-
-        MusicManager.ReloadInitialize();
-
-        for (int i = 0; i < 10; i++)
+        if (!isReloading)
         {
-            yield return new WaitForEndOfFrame();
-        }
-        MusicManager.ReloadSound();
-        MusicManager.AirDischarge();
-        StartCoroutine(Discharge());
-        Heat(true);
-        for (int i = 0; i < 4; i++)
-        {
-            yield return new WaitForEndOfFrame();
-        }
-        MusicManager.ReloadSound();
-        for (int i = 0; i < 4; i++)
-        {
-            yield return new WaitForEndOfFrame();
-        }
-        Stream(true);
+            isReloading = true;
 
-        for (int i = 0; i < 32; i++)
-        {
+            pistolAnime.SetBool("Reload", true);
             yield return new WaitForEndOfFrame();
+            pistolAnime.SetBool("Reload", false);
+
+            MusicManager.ReloadInitialize();
+
+            for (int i = 0; i < 10; i++)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            MusicManager.ReloadSound();
+            MusicManager.AirDischarge();
+            StartCoroutine(Discharge());
+            Heat(true);
+            for (int i = 0; i < 4; i++)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            MusicManager.ReloadSound();
+            for (int i = 0; i < 4; i++)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            Stream(true);
+
+            for (int i = 0; i < 32; i++)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            isReloading = false;
         }
-        isReloading = false;
     }
     IEnumerator Discharge()
     {
