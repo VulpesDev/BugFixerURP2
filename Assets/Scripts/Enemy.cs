@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     public Enemy_Behaviour memory;
-    Enemy_Behaviour.EnemyType typeEnemy;
+    public Enemy_Behaviour.EnemyType typeEnemy;
     NavMeshAgent agent;
 
     GameObject player;
@@ -27,13 +27,20 @@ public class Enemy : MonoBehaviour
     GameObject turret;
 
     ParticleSystem muzzleFlash;
+    AudioSource bugEngine;
 
     private void Awake()
     {
         agent = gameObject.AddComponent<NavMeshAgent>();
         agent.autoBraking = false;
         flesh = gameObject.AddComponent<Flesh>();
+        bugEngine = transform.GetChild(0).GetComponent<AudioSource>();
+        Invoke("PlayEngineSound", Random.Range(0.0f, 0.9f));
         LoadSettings();
+    }
+    void PlayEngineSound()
+    {
+        bugEngine.Play();
     }
     private void Start()
     {
@@ -46,6 +53,7 @@ public class Enemy : MonoBehaviour
             turret = transform.GetChild(0).GetChild(0).gameObject;
         }
         muzzleFlash = turret.transform.GetChild(1).GetComponent<ParticleSystem>();
+        bugEngine.pitch = Random.Range(0.8f, 1.2f);
     }
 
     void Update()
