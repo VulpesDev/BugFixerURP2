@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     public Enemy_Behaviour memory;
-    public Enemy_Behaviour.EnemyType typeEnemy;
+    [HideInInspector]public Enemy_Behaviour.EnemyType typeEnemy;
     NavMeshAgent agent;
 
     GameObject player;
@@ -29,13 +29,13 @@ public class Enemy : MonoBehaviour
     ParticleSystem muzzleFlash;
     AudioSource bugEngine;
 
+    Animator humanAnimator;
+
     private void Awake()
     {
         agent = gameObject.AddComponent<NavMeshAgent>();
-        agent.autoBraking = false;
         flesh = gameObject.AddComponent<Flesh>();
-        bugEngine = transform.GetChild(0).GetComponent<AudioSource>();
-        Invoke("PlayEngineSound", Random.Range(0.0f, 0.9f));
+
         LoadSettings();
     }
     void PlayEngineSound()
@@ -49,11 +49,18 @@ public class Enemy : MonoBehaviour
         StartCoroutine(SetDestinationCheck());
         if (typeEnemy == Enemy_Behaviour.EnemyType.Shooter)
         {
+            bugEngine = transform.GetChild(0).GetComponent<AudioSource>();
             StartCoroutine(Aim());
             turret = transform.GetChild(0).GetChild(0).gameObject;
+            muzzleFlash = turret.transform.GetChild(1).GetComponent<ParticleSystem>();
+            bugEngine.pitch = Random.Range(0.8f, 1.2f);
+            Invoke("PlayEngineSound", Random.Range(0.0f, 0.9f));
         }
-        muzzleFlash = turret.transform.GetChild(1).GetComponent<ParticleSystem>();
-        bugEngine.pitch = Random.Range(0.8f, 1.2f);
+        else if (typeEnemy == Enemy_Behaviour.EnemyType.Bomber)
+        {
+            humanAnimator = transform.GetChild(0).GetComponent<Animator>();
+        }
+
     }
 
     void Update()
@@ -68,6 +75,7 @@ public class Enemy : MonoBehaviour
         if (typeEnemy == Enemy_Behaviour.EnemyType.Bomber)   ///// Bomber ONLY
         {
             if (distance <= maxDistanceB && distanceY <= 3) Explode();
+            humanAnimator.SetFloat("RunningSpeed", (agent.velocity.magnitude / agent.speed) + 0.2f); 
         }
         else if (typeEnemy == Enemy_Behaviour.EnemyType.Shooter) ///// Shooter ONLY
         {
@@ -170,6 +178,7 @@ public class Enemy : MonoBehaviour
     }
     public void Explode()
     {
+
         player.GetComponent<Flesh>().TakeDamage(explodeDamage);
         flesh.TakeDamage(flesh.health);
     }

@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeEnemy: 0
   speed: 12
-  angularSpeed: 1000
-  acceleration: 100
+  angularSpeed: 360
+  acceleration: 20
+  rotationDamping: 0
   health: 100
   firerate: 0
   accuracy: 0
