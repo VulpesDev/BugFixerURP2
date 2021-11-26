@@ -42,6 +42,7 @@ public class GUI_Enemy_Behaviour : Editor
         EditorGUILayout.PropertyField(serializedObject.FindProperty("speed"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("angularSpeed"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("acceleration"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("rotationDamping"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("health"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("firerate"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("accuracy"));
