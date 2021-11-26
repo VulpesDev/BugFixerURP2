@@ -18,6 +18,15 @@ public class Flesh : MonoBehaviour
     }
     void Die()
     {
+        if(GetComponent<Enemy>() != null)
+        {
+            if(GetComponent<Enemy>().typeEnemy == Enemy_Behaviour.EnemyType.Shooter)
+            {
+                GameObject g = Resources.Load("AI/Bug-Dead") as GameObject;
+                Instantiate(g, transform.position, transform.rotation);
+                MusicManager.Explode(transform.position);
+            }
+        }
         //temporary
         Destroy(gameObject);
     }

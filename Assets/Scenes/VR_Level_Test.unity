@@ -694,10 +694,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   memory: {fileID: 11400000, guid: 5a24b1cf578a46a489ea5e3bc6788e68, type: 2}
+  raycastTr: {fileID: 0}
   showDistance: 0
   showHealth: 0
   showTarget: 0
   showVision: 1
+  showAim: 0
 --- !u!64 &496602637
 MeshCollider:
   m_ObjectHideFlags: 0

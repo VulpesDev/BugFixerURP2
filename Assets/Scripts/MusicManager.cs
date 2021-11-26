@@ -23,7 +23,7 @@ public class MusicManager : MonoBehaviour
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             laser = !laser;
         }
@@ -93,6 +93,38 @@ public class MusicManager : MonoBehaviour
     #endregion
 
     #region Enviroment
+    static public void Explode(Vector3 position)
+    {
+
+        GameObject Sound = new GameObject();
+        Sound.transform.parent = interactions;
+        Sound.transform.position = position;
+        AudioSource ASound = Sound.AddComponent<AudioSource>();
+        ASound.clip = Resources.Load("Sounds/Enviroment/BugExplosion") as AudioClip;
+        //ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
+        ASound.spatialBlend = 1;
+        ASound.minDistance = 10;
+        ASound.maxDistance = 40;
+        ASound.pitch = Random.Range(0.8f, 1.2f);
+        ASound.Play();
+        Sound.AddComponent<AudiosDefault>();
+    }
+    static public void ShootLaser(Vector3 position)
+    {
+
+        GameObject Sound = new GameObject();
+        Sound.transform.parent = interactions;
+        Sound.transform.position = position;
+        AudioSource ASound = Sound.AddComponent<AudioSource>();
+        ASound.clip = Resources.Load("Sounds/Player/LaserShot") as AudioClip;
+        //ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
+        ASound.spatialBlend = 1;
+        ASound.minDistance = 10;
+        ASound.maxDistance = 40;
+        ASound.pitch = Random.Range(0.5f, 0.8f);
+        ASound.Play();
+        Sound.AddComponent<AudiosDefault>();
+    }
     static public void TypeUI()
     {
         GameObject Sound = new GameObject();

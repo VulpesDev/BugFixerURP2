@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     public Enemy_Behaviour memory;
-    Enemy_Behaviour.EnemyType typeEnemy;
+    public Enemy_Behaviour.EnemyType typeEnemy;
     NavMeshAgent agent;
 
     GameObject player;
@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     float maxDistanceA;
     float maxDistanceB;
     float maxDistance;
+    float rotationDamping;
 
     int explodeDamage;
 
@@ -23,18 +24,36 @@ public class Enemy : MonoBehaviour
     int accuracy;
     int damage;
 
+    GameObject turret;
+
+    ParticleSystem muzzleFlash;
+    AudioSource bugEngine;
+
     private void Awake()
     {
         agent = gameObject.AddComponent<NavMeshAgent>();
+        agent.autoBraking = false;
         flesh = gameObject.AddComponent<Flesh>();
+        bugEngine = transform.GetChild(0).GetComponent<AudioSource>();
+        Invoke("PlayEngineSound", Random.Range(0.0f, 0.9f));
         LoadSettings();
+    }
+    void PlayEngineSound()
+    {
+        bugEngine.Play();
     }
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         maxDistance = Random.Range(maxDistanceA, maxDistanceB);
         StartCoroutine(SetDestinationCheck());
-        if (typeEnemy == Enemy_Behaviour.EnemyType.Shooter) StartCoroutine(Aim());
+        if (typeEnemy == Enemy_Behaviour.EnemyType.Shooter)
+        {
+            StartCoroutine(Aim());
+            turret = transform.GetChild(0).GetChild(0).gameObject;
+        }
+        muzzleFlash = turret.transform.GetChild(1).GetComponent<ParticleSystem>();
+        bugEngine.pitch = Random.Range(0.8f, 1.2f);
     }
 
     void Update()
@@ -52,7 +71,24 @@ public class Enemy : MonoBehaviour
         }
         else if (typeEnemy == Enemy_Behaviour.EnemyType.Shooter) ///// Shooter ONLY
         {
-            
+            //limits Xrot 25 and -25
+            Vector3 lookPosY = player.transform.position - turret.transform.position;
+            lookPosY.y = 0;
+            Quaternion rotationY = Quaternion.LookRotation(lookPosY);
+            turret.transform.rotation = Quaternion.Slerp(turret.transform.rotation, rotationY, Time.deltaTime 
+                * rotationDamping);
+
+            Vector3 relativePos = player.transform.position - turret.transform.position;
+            Quaternion LookAtRotation = Quaternion.LookRotation(relativePos);
+            Quaternion LookAtRotationOnly_X = Quaternion.Euler(LookAtRotation.eulerAngles.x,
+                turret.transform.rotation.eulerAngles.y, turret.transform.rotation.eulerAngles.z);
+            turret.transform.rotation = LookAtRotationOnly_X;
+
+            Vector3 lookPos2 = player.transform.position - transform.position;
+            lookPos2.y = 0;
+            Quaternion rotation2 = Quaternion.LookRotation(lookPos2);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation2, Time.deltaTime
+                * rotationDamping/3);
         }
 
 #if UNITY_EDITOR
@@ -61,7 +97,7 @@ public class Enemy : MonoBehaviour
     }
     IEnumerator Aim()
     {
-        if (HasVision())
+        if (HasAim())
         {
             yield return new WaitForSeconds(firerate);
             Shoot();
@@ -71,8 +107,11 @@ public class Enemy : MonoBehaviour
     }
     public void Shoot()
     {
+        muzzleFlash.Play();
+        MusicManager.ShootLaser(transform.position);
+
         int percent = Random.Range(0, 101);
-        if(percent<=accuracy && HasVision())
+        if(percent<=accuracy && HasAim())
         {
             player.GetComponent<Flesh>().TakeDamage(damage);
         }
@@ -85,6 +124,16 @@ public class Enemy : MonoBehaviour
         direction = direction.normalized;
         RaycastHit ray;
         if (Physics.Raycast(raycastPos, direction, out ray) && ray.collider.tag == "Player")
+            return true;
+        else return false;
+    }
+    [SerializeField] Transform raycastTr;
+    bool HasAim()
+    {
+        Vector3 direction = -raycastTr.up;
+        direction = direction.normalized;
+        RaycastHit ray;
+        if (Physics.Raycast(raycastTr.position, direction, out ray) && ray.collider.tag == "Player")
             return true;
         else return false;
     }
@@ -107,6 +156,7 @@ public class Enemy : MonoBehaviour
         agent.speed = memory.speed;
         agent.angularSpeed = memory.angularSpeed;
         agent.acceleration = memory.acceleration;
+        rotationDamping = memory.rotationDamping;
 
         flesh.health = memory.health;
         firerate = memory.firerate;
@@ -130,6 +180,7 @@ public class Enemy : MonoBehaviour
     public bool showHealth;
     public bool showTarget;
     public bool showVision;
+    public bool showAim;
     void Debugging()
     {
        if(showDistance) Debug.Log(distance);
@@ -141,6 +192,13 @@ public class Enemy : MonoBehaviour
             if (HasVision()) col = Color.green; else col = Color.red;
             Debug.DrawRay(new Vector3(transform.position.x, transform.position.y + 1,
             transform.position.z), (player.transform.position - transform.position).normalized *
+                Vector3.Distance(player.transform.position, transform.position), col);
+        }
+        if (showAim)
+        {
+            Color col = Color.red;
+            if (HasAim()) col = Color.green; else col = Color.red;
+            Debug.DrawRay(raycastTr.position, -raycastTr.up *
                 Vector3.Distance(player.transform.position, transform.position), col);
         }
     }
