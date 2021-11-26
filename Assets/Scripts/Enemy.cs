@@ -26,6 +26,8 @@ public class Enemy : MonoBehaviour
 
     GameObject turret;
 
+    ParticleSystem muzzleFlash;
+
     private void Awake()
     {
         agent = gameObject.AddComponent<NavMeshAgent>();
@@ -43,6 +45,7 @@ public class Enemy : MonoBehaviour
             StartCoroutine(Aim());
             turret = transform.GetChild(0).GetChild(0).gameObject;
         }
+        muzzleFlash = turret.transform.GetChild(1).GetComponent<ParticleSystem>();
     }
 
     void Update()
@@ -96,6 +99,9 @@ public class Enemy : MonoBehaviour
     }
     public void Shoot()
     {
+        muzzleFlash.Play();
+        MusicManager.ShootLaser(transform.position);
+
         int percent = Random.Range(0, 101);
         if(percent<=accuracy && HasAim())
         {
