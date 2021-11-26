@@ -484,6 +484,7 @@ MonoBehaviour:
   speed: 450
   popups: 13
   percentage: 70
+  stageFinished: 0
 --- !u!4 &407701435
 Transform:
   m_ObjectHideFlags: 0

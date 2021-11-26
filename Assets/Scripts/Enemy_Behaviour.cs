@@ -13,6 +13,7 @@ public class Enemy_Behaviour : ScriptableObject
     public float speed;
     public float angularSpeed;
     public float acceleration;
+    public float rotationDamping;
     [Space]
     [Header("Body")]
     public int health;
