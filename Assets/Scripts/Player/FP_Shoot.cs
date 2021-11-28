@@ -46,24 +46,24 @@ public class FP_Shoot : MonoBehaviour
             {
                 Raycast();
             }
-            else if (Input.GetKeyDown(KeyCode.Mouse1))
-            {
-                if (!inBurst)
-                    StartCoroutine(Burst());
-            }
+            //else if (Input.GetKeyDown(KeyCode.Mouse1))
+            //{
+            //    if (!inBurst)
+            //        StartCoroutine(Burst());
+            //}
         }
     }
 
-    IEnumerator Burst()
-    {
-        inBurst = true;
-        for (int i = 0; i < 3; i++)
-        {
-            Raycast();
-            yield return new WaitForSeconds(0.08f);
-        }
-        inBurst = false;
-    }
+    //IEnumerator Burst()
+    //{
+    //    inBurst = true;
+    //    for (int i = 0; i < 3; i++)
+    //    {
+    //        Raycast();
+    //        yield return new WaitForSeconds(0.08f);
+    //    }
+    //    inBurst = false;
+    //}
 
     void Raycast()
     {
