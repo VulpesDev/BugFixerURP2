@@ -36,8 +36,16 @@ public class CharacterVR : MonoBehaviour
     float baseHeight;
     bool sliding = false;
 
+    bool canDash;
+    [HideInInspector]public int dashes;
+    public int maxDashes;
+    [HideInInspector]public float dashTimer;
+    public float cooldownTimeDash = 1f;
+
     void Start()
     {
+        StartCoroutine(DashCooldown());
+
         characterController = GetComponent<CharacterController>();
 
         Cursor.lockState = CursorLockMode.Locked;
@@ -136,10 +144,28 @@ public class CharacterVR : MonoBehaviour
     /// Dash
     void DashUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && dashes > 0)
         {
             AddImpact((Input.GetAxis("Vertical") * forward + Input.GetAxis("Horizontal") * right).normalized, dashForce);
+            dashes--;
+            if(canDash)
+            StartCoroutine(DashCooldown());
         }
+    }
+    IEnumerator DashCooldown()
+    {
+        canDash = false;
+        while (dashes < maxDashes)
+        {
+            dashTimer = 0;
+            for (int i = 0; i < cooldownTimeDash * 100; i++)
+            {
+                yield return new WaitForSeconds(0.01f);
+                dashTimer += 0.01f / cooldownTimeDash;
+            }
+            dashes++;
+        }
+        canDash = true;
     }
 
 

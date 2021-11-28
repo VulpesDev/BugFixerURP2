@@ -5,19 +5,47 @@ using UnityEngine.UI;
 
 public class UI_Allign : MonoBehaviour
 {
-    int overheat;
-    Slider pistolSlider;
     FP_Shoot fpshoot;
+    Flesh playerFlesh;
+    CharacterVR playerMov;
+    GameObject player;
+    public Text healthVal, healthValS;
+    public Slider dash;
+    public Text dashVal;
+    public RectTransform crosshair;
+    public Slider pistolSlider;
 
-    private void Start()
+    private void Awake()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerFlesh = player.GetComponent<Flesh>();
+        playerMov = player.GetComponent<CharacterVR>();
         fpshoot = Camera.main.transform.GetComponent<FP_Shoot>();
-        pistolSlider = Camera.main.transform.GetChild(1).GetChild(1).GetChild(0).GetComponent<Slider>();
+
     }
 
     private void Update()
     {
-        overheat = fpshoot.overheat;
-        pistolSlider.value = overheat;
+        healthValS.text = healthVal.text;
+        healthVal.text = playerFlesh.health.ToString();
+        dash.value = playerMov.dashTimer;
+        dashVal.text = playerMov.dashes.ToString();
+        pistolSlider.value = fpshoot.overheat;
+    }
+
+    public void HitBullet()
+    {
+        StartCoroutine(bulletHit());
+    }
+    IEnumerator bulletHit()
+    {
+        MusicManager.HitCrosshair();
+        crosshair.rotation = Quaternion.Euler(0, 0, 45);
+        crosshair.sizeDelta = new Vector2(120, 120);
+        crosshair.GetComponent<Image>().color = Color.white;
+        yield return new WaitForSeconds(0.2f);
+        crosshair.rotation = Quaternion.identity;
+        crosshair.sizeDelta = new Vector2(100, 100);
+        crosshair.GetComponent<Image>().color = Color.red;
     }
 }

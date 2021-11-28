@@ -148,6 +148,8 @@ public class FP_Shoot : MonoBehaviour
     }
     void Shoot()
     {
+        GameObject.FindGameObjectWithTag("UI_Canvas").GetComponent<FP_UI>().VFX_CameraShake(0.1f, 0.5f);
+
         overheat += 5;
 
         MusicManager.ShootPistol();
