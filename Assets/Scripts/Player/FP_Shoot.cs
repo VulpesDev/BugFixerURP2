@@ -5,7 +5,7 @@ using UnityEngine;
 public class FP_Shoot : MonoBehaviour
 {
     GameObject pistol;
-    Animator pistolAnime;
+    public Animator pistolAnime;
     Vector3 rayOrigin = new Vector3(0.5f, 0.5f, 0f); // center of the screen
     float rayLength = 500f;
     int damage = 10;
