@@ -9745,6 +9745,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8bf934d895e34d41a837f9f268abf98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pistolAnime: {fileID: 0}
   overheat: 0
 --- !u!4 &624533674 stripped
 Transform:
@@ -27330,8 +27331,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1956141954578355585, guid: aba7def1d8a51f64f83587caf593f4ff, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1956141954578355591, guid: aba7def1d8a51f64f83587caf593f4ff, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 55832ad25dcf2214383e38e014384086, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aba7def1d8a51f64f83587caf593f4ff, type: 3}
 --- !u!1001 &1926378327
