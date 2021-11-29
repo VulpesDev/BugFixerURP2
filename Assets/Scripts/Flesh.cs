@@ -31,6 +31,7 @@ public class Flesh : MonoBehaviour
             }
             else if (GetComponent<Enemy>().typeEnemy == Enemy_Behaviour.EnemyType.Bomber)
             {
+                gameObject.tag = "Untagged";
                 Destroy(GetComponent<Enemy>());
                 Destroy(GetComponent<CapsuleCollider>());
                 Destroy(GetComponent<NavMeshAgent>());

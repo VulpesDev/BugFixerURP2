@@ -11,7 +11,7 @@ public class UI_Allign : MonoBehaviour
     GameObject player;
     public Text healthVal, healthValS;
     public Slider dash;
-    public Text dashVal;
+    public Text dashVal, dashValS;
     public RectTransform crosshair;
     public Slider pistolSlider;
 
@@ -26,6 +26,7 @@ public class UI_Allign : MonoBehaviour
 
     private void Update()
     {
+        dashValS.text = dashVal.text;
         healthValS.text = healthVal.text;
         healthVal.text = playerFlesh.health.ToString();
         dash.value = playerMov.dashTimer;

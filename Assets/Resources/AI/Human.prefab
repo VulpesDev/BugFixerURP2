@@ -550,7 +550,7 @@ GameObject:
   - component: {fileID: 2526906294733893595}
   m_Layer: 0
   m_Name: Human
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -844,7 +844,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3445313305638732129}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 1329d0eda4bf92545b7d714ee6fda6be, type: 3}
   m_Controller: {fileID: 9100000, guid: 295bcc436cbdbea41a18aff6f2681710, type: 2}
   m_CullingMode: 0
