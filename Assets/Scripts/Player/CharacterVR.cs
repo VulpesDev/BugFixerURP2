@@ -42,6 +42,8 @@ public class CharacterVR : MonoBehaviour
     [HideInInspector]public float dashTimer;
     public float cooldownTimeDash = 1f;
 
+    [SerializeField]PostProcessManagement ppManager;
+
     void Start()
     {
         StartCoroutine(DashCooldown());
@@ -146,6 +148,9 @@ public class CharacterVR : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftShift) && dashes > 0)
         {
+            MusicManager.DashSound();
+            ppManager.StartDash();
+
             AddImpact((Input.GetAxis("Vertical") * forward + Input.GetAxis("Horizontal") * right).normalized, dashForce);
             dashes--;
             if(canDash)

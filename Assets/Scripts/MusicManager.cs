@@ -33,16 +33,6 @@ public class MusicManager : MonoBehaviour
 
     static public void ShootPistol()
     {
-        //GameObject Sound = new GameObject();
-        //Sound.transform.parent = player;
-        //AudioSource ASound = Sound.AddComponent<AudioSource>();
-        //ASound.clip = laser == true ? Resources.Load("Sounds/Player/LaserShot") as AudioClip :
-        //    Resources.Load("Sounds/Player/1911Colt") as AudioClip;
-        ////ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
-        //ASound.pitch = Random.Range(0.9f, 1.2f);
-        //ASound.Play();
-        //Sound.AddComponent<AudiosDefault>();
-
         for (int i = 0; i <= 1; i++)
         {
             GameObject Sound = new GameObject();
@@ -84,6 +74,17 @@ public class MusicManager : MonoBehaviour
         Sound.transform.parent = player;
         AudioSource ASound = Sound.AddComponent<AudioSource>();
         ASound.clip = Resources.Load("Sounds/Player/ReloadInitialization") as AudioClip;
+        //ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
+        ASound.pitch = Random.Range(0.9f, 1.2f);
+        ASound.Play();
+        Sound.AddComponent<AudiosDefault>();
+    }
+    static public void DashSound()
+    {
+        GameObject Sound = new GameObject();
+        Sound.transform.parent = player;
+        AudioSource ASound = Sound.AddComponent<AudioSource>();
+        ASound.clip = Resources.Load("Sounds/Player/DashSound") as AudioClip;
         //ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
         ASound.pitch = Random.Range(0.9f, 1.2f);
         ASound.Play();
