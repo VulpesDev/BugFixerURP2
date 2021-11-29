@@ -17,7 +17,7 @@ MonoBehaviour:
   angularSpeed: 360
   acceleration: 20
   rotationDamping: 0
-  health: 100
+  health: 40
   firerate: 0
   accuracy: 0
   damage: 0

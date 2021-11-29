@@ -14,6 +14,7 @@ public class Flesh : MonoBehaviour
     {
         if (gameObject.CompareTag("Player"))
             GameObject.FindGameObjectWithTag("UI_Canvas").GetComponent<FP_UI>().VFX_TakeDamage();
+        else GameObject.Find("AllignUI").GetComponent<UI_Allign>().HitBullet();
 
         health -= amount;
     }
@@ -30,11 +31,7 @@ public class Flesh : MonoBehaviour
             }
             else if (GetComponent<Enemy>().typeEnemy == Enemy_Behaviour.EnemyType.Bomber)
             {
-                Instantiate(Resources.Load("AI/BigExplosion") as GameObject, 
-                    new Vector3(transform.position.x, transform.position.y + 1.2f, transform.position.z),
-                    transform.rotation);
-                MusicManager.Explode(transform.position);
-
+                gameObject.tag = "Untagged";
                 Destroy(GetComponent<Enemy>());
                 Destroy(GetComponent<CapsuleCollider>());
                 Destroy(GetComponent<NavMeshAgent>());

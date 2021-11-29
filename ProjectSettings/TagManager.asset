@@ -8,6 +8,7 @@ TagManager:
   - Difficulty
   - ServerMonitor
   - UI_Canvas
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -17,8 +18,8 @@ TagManager:
   - UI
   - SuperPC
   - Outlined
-  - 
-  - 
+  - Render2
+  - Pistol
   - 
   - 
   - 

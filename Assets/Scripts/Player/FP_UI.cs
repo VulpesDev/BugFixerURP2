@@ -18,7 +18,7 @@ public class FP_UI : MonoBehaviour
     }
     IEnumerator TakeDamage()
     {
-        VFX_CameraShake(0.35f);
+        VFX_CameraShake(0.35f, 1f);
         damageImage.color = new Color(damageImage.color.r, damageImage.color.g,
             damageImage.color.b, 0.45f);
         yield return new WaitForSeconds(0.05f);
@@ -29,11 +29,11 @@ public class FP_UI : MonoBehaviour
         }
     }
     
-    public void VFX_CameraShake(float duration)
+    public void VFX_CameraShake(float duration, float magnitude)
     {
-        StartCoroutine(CameraShake(duration));
+        StartCoroutine(CameraShake(duration, magnitude));
     }
-    IEnumerator CameraShake(float duration)
+    IEnumerator CameraShake(float duration, float magnitude)
     {
         Vector3 originalPosition = cam.transform.localPosition;
         float elapsed = 0f;
@@ -41,7 +41,7 @@ public class FP_UI : MonoBehaviour
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
-            float strenght = magnitudeCurve.Evaluate(elapsed / duration);
+            float strenght = magnitudeCurve.Evaluate(elapsed / duration) * magnitude;
             cam.transform.localPosition = originalPosition + Random.insideUnitSphere * strenght;
             yield return null;
         }
