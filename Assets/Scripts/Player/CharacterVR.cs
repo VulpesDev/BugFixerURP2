@@ -44,6 +44,9 @@ public class CharacterVR : MonoBehaviour
 
     [SerializeField]PostProcessManagement ppManager;
 
+    FP_Shoot shootS;
+    Animator pistolAnime;
+
     void Start()
     {
         StartCoroutine(DashCooldown());
@@ -58,6 +61,9 @@ public class CharacterVR : MonoBehaviour
         baseHeight = characterController.height;
 
         baseWalkingSpeed = walkingSpeed;
+
+        shootS = Camera.main.GetComponent<FP_Shoot>();
+        pistolAnime = shootS.pistolAnime;
     }
 
     Vector3 forward, right;
@@ -97,6 +103,9 @@ public class CharacterVR : MonoBehaviour
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
+
+        if (characterController.velocity.magnitude > 0 && characterController.isGrounded && !sliding)
+            pistolAnime.SetBool("IsMoving", true); else pistolAnime.SetBool("IsMoving", false);
     }
     private void FixedUpdate()
     {
