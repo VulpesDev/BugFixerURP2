@@ -57,6 +57,29 @@ public class MusicManager : MonoBehaviour
         ASound.Play();
         Sound.AddComponent<AudiosDefault>();
     }
+    static public void AirDischarge2()
+    {
+        GameObject Sound = new GameObject();
+        Sound.transform.parent = player;
+        AudioSource ASound = Sound.AddComponent<AudioSource>();
+        ASound.clip = Resources.Load("Sounds/Player/Air_Discharge") as AudioClip;
+        //ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
+        ASound.pitch = Random.Range(0.3f, 0.5f);
+        ASound.Play();
+        Sound.AddComponent<AudiosDefault>();
+    }
+    static public void TommyGun()
+    {
+        GameObject Sound = new GameObject();
+        Sound.transform.parent = player;
+        AudioSource ASound = Sound.AddComponent<AudioSource>();
+        ASound.clip = Resources.Load("Sounds/Player/TommyGun") as AudioClip;
+        //ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
+        ASound.volume = 0.7f;
+        ASound.pitch = Random.Range(0.9f, 1.2f);
+        ASound.Play();
+        Sound.AddComponent<AudiosDefault>();
+    }
     static public void ReloadSound()
     {
         GameObject Sound = new GameObject();

@@ -45,7 +45,10 @@ public class CharacterVR : MonoBehaviour
     [SerializeField]PostProcessManagement ppManager;
 
     FP_Shoot shootS;
+    FP_ShootT shootST;
     Animator pistolAnime;
+
+    [SerializeField] GameObject tommy, pistol;
 
     void Start()
     {
@@ -63,24 +66,39 @@ public class CharacterVR : MonoBehaviour
         baseWalkingSpeed = walkingSpeed;
 
         shootS = Camera.main.GetComponent<FP_Shoot>();
-        pistolAnime = shootS.pistolAnime;
+        shootST = Camera.main.GetComponent<FP_ShootT>();
+
     }
 
     Vector3 forward, right;
 
     void Update()
     {
+        pistolAnime = Camera.main.GetComponent<FP_Shoot>().enabled ? shootS.pistolAnime :
+            shootST.gunAnime;
+        if (characterController.velocity.magnitude > 0 && characterController.isGrounded && !sliding)
+            pistolAnime.SetBool("IsMoving", true);
+        else pistolAnime.SetBool("IsMoving", false);
+
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            ShitchWeapons(true);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            ShitchWeapons(false);
+        }
+
         DashUpdate();
 
-
         SlideUpdate();
-
 
         forward = transform.TransformDirection(Vector3.forward);
         right = transform.TransformDirection(Vector3.right);
 
-        float curSpeedX = canMove ? walkingSpeed * Input.GetAxis("Vertical") : 0;
-        float curSpeedY = canMove ? walkingSpeed * Input.GetAxis("Horizontal") : 0;
+        float curSpeedX = canMove ? walkingSpeed * Input.GetAxisRaw("Vertical") : 0;
+        float curSpeedY = canMove ? walkingSpeed * Input.GetAxisRaw("Horizontal") : 0;
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
@@ -94,8 +112,6 @@ public class CharacterVR : MonoBehaviour
             moveDirection.y = movementDirectionY;
         }
 
-
-
         if (canLook)
         {
             rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
@@ -104,8 +120,8 @@ public class CharacterVR : MonoBehaviour
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
 
-        if (characterController.velocity.magnitude > 0 && characterController.isGrounded && !sliding)
-            pistolAnime.SetBool("IsMoving", true); else pistolAnime.SetBool("IsMoving", false);
+
+        if (jumps != 0 && characterController.isGrounded) jumps = 0;
     }
     private void FixedUpdate()
     {
@@ -113,11 +129,19 @@ public class CharacterVR : MonoBehaviour
         {
             moveDirection.y -= gravity * Time.fixedDeltaTime;
         }
-        else
-    if (jumps != 0) jumps = 0;
+        
         characterController.Move(moveDirection * Time.fixedDeltaTime);
         ImpactFixedUpdate();
         SlideImpactFixedUpdate();
+    }
+
+    void ShitchWeapons(bool rifle)
+    {
+        if (pistolAnime.GetCurrentAnimatorStateInfo(0).IsName("Reload")) return;
+        pistol.SetActive(!rifle);
+        tommy.SetActive(rifle);
+        shootS.enabled = !rifle;
+        shootST.enabled = rifle;
     }
 
     bool cooldown = false;
