@@ -79,8 +79,8 @@ public class CharacterVR : MonoBehaviour
         forward = transform.TransformDirection(Vector3.forward);
         right = transform.TransformDirection(Vector3.right);
 
-        float curSpeedX = canMove ? walkingSpeed * Input.GetAxis("Vertical") : 0;
-        float curSpeedY = canMove ? walkingSpeed * Input.GetAxis("Horizontal") : 0;
+        float curSpeedX = canMove ? walkingSpeed * Input.GetAxisRaw("Vertical") : 0;
+        float curSpeedY = canMove ? walkingSpeed * Input.GetAxisRaw("Horizontal") : 0;
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
@@ -94,8 +94,6 @@ public class CharacterVR : MonoBehaviour
             moveDirection.y = movementDirectionY;
         }
 
-
-
         if (canLook)
         {
             rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
@@ -106,6 +104,8 @@ public class CharacterVR : MonoBehaviour
 
         if (characterController.velocity.magnitude > 0 && characterController.isGrounded && !sliding)
             pistolAnime.SetBool("IsMoving", true); else pistolAnime.SetBool("IsMoving", false);
+
+        if (jumps != 0 && characterController.isGrounded) jumps = 0;
     }
     private void FixedUpdate()
     {
@@ -113,8 +113,7 @@ public class CharacterVR : MonoBehaviour
         {
             moveDirection.y -= gravity * Time.fixedDeltaTime;
         }
-        else
-    if (jumps != 0) jumps = 0;
+        
         characterController.Move(moveDirection * Time.fixedDeltaTime);
         ImpactFixedUpdate();
         SlideImpactFixedUpdate();
