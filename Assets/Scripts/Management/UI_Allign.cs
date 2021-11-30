@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UI_Allign : MonoBehaviour
 {
     FP_Shoot fpshoot;
+    FP_ShootT fpshootT;
     Flesh playerFlesh;
     CharacterVR playerMov;
     GameObject player;
@@ -14,6 +15,7 @@ public class UI_Allign : MonoBehaviour
     public Text dashVal, dashValS;
     public RectTransform crosshair;
     public Slider pistolSlider;
+    public Slider pistolSliderT;
 
     private void Awake()
     {
@@ -21,6 +23,7 @@ public class UI_Allign : MonoBehaviour
         playerFlesh = player.GetComponent<Flesh>();
         playerMov = player.GetComponent<CharacterVR>();
         fpshoot = Camera.main.transform.GetComponent<FP_Shoot>();
+        fpshootT = Camera.main.transform.GetComponent<FP_ShootT>();
 
     }
 
@@ -32,6 +35,7 @@ public class UI_Allign : MonoBehaviour
         dash.value = playerMov.dashTimer;
         dashVal.text = playerMov.dashes.ToString();
         pistolSlider.value = fpshoot.overheat;
+        pistolSliderT.value = fpshootT.overheat;
     }
 
     public void HitBullet()

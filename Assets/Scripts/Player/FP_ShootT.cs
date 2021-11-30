@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FP_Shoot : MonoBehaviour
+public class FP_ShootT : MonoBehaviour
 {
-    GameObject pistol;
-    public Animator pistolAnime;
+    GameObject gun;
+    public Animator gunAnime;
     Vector3 rayOrigin = new Vector3(0.5f, 0.5f, 0f); // center of the screen
     float rayLength = 500f;
     int damage = 10;
@@ -13,24 +13,21 @@ public class FP_Shoot : MonoBehaviour
     bool canShoot;
     public bool isReloading = false;
 
-    public ParticleSystem muzzleFlash, pressuredL, pressuredR, heatDistortion;
+    public ParticleSystem muzzleFlash, pressureSteam;
 
 
     private void OnEnable()
     {
         isReloading = false;
     }
-
     private void Start()
     {
-        pistol = transform.GetChild(1).gameObject;
-        pistolAnime = pistol.transform.GetChild(0).GetComponent<Animator>();
+        gun = transform.GetChild(2).gameObject;
+        gunAnime = gun.transform.GetChild(0).GetComponent<Animator>();
+        muzzleFlash = gun.transform.GetChild(0).GetChild(0).GetComponent<ParticleSystem>();
+        pressureSteam = gun.transform.GetChild(0).GetChild(2).GetChild(0)
+            .GetComponent<ParticleSystem>();
 
-        muzzleFlash = transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<ParticleSystem>();
-
-        pressuredL = transform.GetChild(1).GetChild(0).GetChild(1).GetComponent<ParticleSystem>();
-        pressuredR = transform.GetChild(1).GetChild(0).GetChild(2).GetComponent<ParticleSystem>();
-        heatDistortion = transform.GetChild(1).GetChild(0).GetChild(3).GetComponent<ParticleSystem>();
     }
 
     private void Update()
@@ -46,28 +43,14 @@ public class FP_Shoot : MonoBehaviour
 
         if (canShoot && !isReloading)
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            if (Input.GetKey(KeyCode.Mouse0))
             {
-                Raycast();
+                if (!gunAnime.GetBool("Shoot"))
+                    Raycast();
             }
-            //else if (Input.GetKeyDown(KeyCode.Mouse1))
-            //{
-            //    if (!inBurst)
-            //        StartCoroutine(Burst());
-            //}
         }
     }
 
-    //IEnumerator Burst()
-    //{
-    //    inBurst = true;
-    //    for (int i = 0; i < 3; i++)
-    //    {
-    //        Raycast();
-    //        yield return new WaitForSeconds(0.08f);
-    //    }
-    //    inBurst = false;
-    //}
 
     void Raycast()
     {
@@ -91,30 +74,44 @@ public class FP_Shoot : MonoBehaviour
     {
         if (!isReloading)
         {
-            //isReloading = true;
-
-            pistolAnime.SetBool("Reload", true);
-            yield return new WaitForEndOfFrame();
-            pistolAnime.SetBool("Reload", false);
-            MusicManager.ReloadInitialize();
+            gunAnime.SetBool("Reload", true);
+            while (!gunAnime.GetCurrentAnimatorStateInfo(0).IsName("Reload"))
+                yield return new WaitForEndOfFrame();
+            gunAnime.SetBool("Reload", false);
+           
             StartCoroutine(Discharge());
+            MusicManager.ReloadInitialize();
+
+            //for (int i = 0; i < 6; i++)
+            //{
+            //    yield return new WaitForEndOfFrame();
+            //}
+            //MusicManager.ReloadSound();
+            //for (int i = 0; i < 13; i++)
+            //{
+            //    yield return new WaitForEndOfFrame();
+            //}
+            //MusicManager.ReloadSound();
+            //pressureSteam.Play();
+            //MusicManager.AirDischarge2();
+            //for (int i = 0; i < 74; i++)
+            //{
+            //    yield return new WaitForEndOfFrame();
+            //}
+            //MusicManager.ReloadSound();
+            //yield return new WaitForEndOfFrame();
+            //yield return new WaitForEndOfFrame();
+
+            //isReloading = false;
         }
     }
     IEnumerator Discharge()
     {
-        while(overheat>0)
+        while (overheat > 0)
         {
             overheat--;
             yield return new WaitForSeconds(0.0035f);
         }
-    }
-    public void Stream(bool state)
-    {
-        if (state) { pressuredL.Play(); pressuredR.Play(); } else { pressuredL.Stop(); pressuredR.Stop(); }
-    }
-    public void Heat(bool state)
-    {
-        if (state) heatDistortion.Play(); else heatDistortion.Stop();
     }
 
     void ShootHit(RaycastHit hitPos)
@@ -131,14 +128,8 @@ public class FP_Shoot : MonoBehaviour
 
         overheat += 3;
 
-        MusicManager.ShootPistol();
         muzzleFlash.Play();
-        StartCoroutine(ShootingOnOff());
-    }
-    IEnumerator ShootingOnOff()
-    {
-        pistolAnime.SetBool("Shoot", true);
-        yield return new WaitForEndOfFrame();
-        pistolAnime.SetBool("Shoot", false);
+        MusicManager.TommyGun();
+        gunAnime.SetBool("Shoot", true);
     }
 }

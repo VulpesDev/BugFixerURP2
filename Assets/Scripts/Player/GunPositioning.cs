@@ -15,7 +15,7 @@ public class GunPositioning : MonoBehaviour
     [SerializeField] GameObject dot2;
     public float positionSpeedBase, positionAcc;
     Vector3 positionCenter;
-    GameObject pistolHolder;
+    [SerializeField]GameObject pistolHolder;
 
 
     void Start()
@@ -26,7 +26,6 @@ public class GunPositioning : MonoBehaviour
         rotationSpeed = rotationSpeedBase;
         positionSpeed = positionSpeedBase;
 
-        pistolHolder = transform.parent.GetChild(2).gameObject;
         dot2.transform.position = pistolHolder.transform.position;
 
 
