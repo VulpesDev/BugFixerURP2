@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.AI;
 
 public class Flesh : MonoBehaviour
@@ -20,10 +21,16 @@ public class Flesh : MonoBehaviour
     }
     void Die()
     {
+        if(gameObject.CompareTag("Player"))
+        {
+            SceneManager.LoadScene(SceneUtility.GetBuildIndexByScenePath("Assets/Scenes/Death.unity"));
+        }
         if(GetComponent<Enemy>() != null)
         {
+            if(GameObject.FindGameObjectWithTag("SpawnManager") != null)
             GameObject.FindGameObjectWithTag("SpawnManager")
                 .GetComponent<SpawnpointManager>().killed++;
+
             if(GetComponent<Enemy>().typeEnemy == Enemy_Behaviour.EnemyType.Shooter)
             {
                 GameObject g = Resources.Load("AI/Bug-Dead") as GameObject;

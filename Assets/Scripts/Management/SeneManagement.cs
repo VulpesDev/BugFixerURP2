@@ -8,10 +8,10 @@ public class SeneManagement : MonoBehaviour
     static bool created = false;
     private void Awake()
     {
-        if(!created)
+        Cursor.lockState = CursorLockMode.None;
+        if (!created)
         DontDestroyOnLoad(gameObject);
         created = true;
-        Cursor.lockState = CursorLockMode.None;
     }
     void Start()
     {
@@ -37,6 +37,6 @@ public class SeneManagement : MonoBehaviour
     public void LoadTutorialLevel()
     {
         SceneManager.LoadScene(
-            SceneUtility.GetBuildIndexByScenePath("Assets/Scenes/Tutorial_VR.unity"));
+            SceneUtility.GetBuildIndexByScenePath("Assets/Scenes/Tutorial_Server.unity"));
     }
 }

@@ -125,6 +125,10 @@ public class CharacterVR : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if(transform.position.y <= -100)
+        {
+            GetComponent<Flesh>().TakeDamage(100);
+        }
         if (!characterController.isGrounded)
         {
             moveDirection.y -= gravity * Time.fixedDeltaTime;

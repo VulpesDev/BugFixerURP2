@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DifficultyManager : MonoBehaviour
 {
@@ -21,7 +22,9 @@ public class DifficultyManager : MonoBehaviour
     }
     private void Start()
     {
-        Bugging(); StartCoroutine(SlowUpdate());
+       if(SceneManager.GetActiveScene().buildIndex
+            != SceneUtility.GetBuildIndexByScenePath("Assets/Scenes/Tutorial_Server.unity"))
+            Bugging(); StartCoroutine(SlowUpdate());
     }
     private void FixedUpdate()
     {

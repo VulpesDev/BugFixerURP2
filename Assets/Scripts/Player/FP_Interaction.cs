@@ -35,6 +35,16 @@ public class FP_Interaction : MonoBehaviour
                     SceneManager.LoadScene(SceneUtility.GetBuildIndexByScenePath
                         ("Assets/Scenes/Server_Level.unity"));
                 }
+                else if (target.CompareTag("TutorialMonitor"))
+                {
+                    SceneManager.LoadScene(SceneUtility.GetBuildIndexByScenePath
+                        ("Assets/Scenes/MainMenu.unity"));
+                }
+                else if (target.CompareTag("TutorialMonitor2"))
+                {
+                    SceneManager.LoadScene(SceneUtility.GetBuildIndexByScenePath
+                        ("Assets/Scenes/Tutorial_VR.unity"));
+                }
             }
         }
         Debug.DrawRay(rayTr.position, rayTr.forward * distance, Color.red);

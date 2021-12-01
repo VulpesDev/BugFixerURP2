@@ -14,6 +14,8 @@ TagManager:
   - FinishMonitor2
   - JumpPad
   - Target
+  - TutorialMonitor
+  - TutorialMonitor2
   layers:
   - Default
   - TransparentFX

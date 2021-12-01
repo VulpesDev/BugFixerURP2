@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 using UnityEngine.UI;
 using TMPro;
@@ -10,7 +11,9 @@ public class TutorialManager : MonoBehaviour
     public static int stage;
     public static bool once = false;
     [SerializeField] TextMeshProUGUI tutorialTxt;
+    [SerializeField] GameObject superPC;
     VideoPlayer vidplayer;
+    GameObject[] enemies;
 
     private void Start()
     {
@@ -18,6 +21,12 @@ public class TutorialManager : MonoBehaviour
     }
     void FixedUpdate()
     {
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        if(enemies.Length <= 0)
+        {
+            superPC.transform.GetChild(4).gameObject.SetActive(true);
+            superPC.transform.GetChild(5).gameObject.SetActive(true);
+        }
         if (once) return;
         switch(stage)
         {
@@ -44,6 +53,9 @@ public class TutorialManager : MonoBehaviour
             case 5:
                 tutorialTxt.text = "Shoot green targets to release platform.";
                 vidplayer.clip = Resources.Load("UI/TutorialVideos/Target") as VideoClip;
+                break;
+            case 6:
+                tutorialTxt.transform.parent.gameObject.SetActive(false);
                 break;
         }
         once = true;
