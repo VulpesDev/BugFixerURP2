@@ -59,6 +59,8 @@ public class CharacterVR : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        lookSpeed = SeneManagement.sensitivity * 2.0f;
+
         lookSpeedBase = lookSpeed;
 
         baseHeight = characterController.height;
@@ -125,6 +127,10 @@ public class CharacterVR : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if(transform.position.y <= -100)
+        {
+            GetComponent<Flesh>().TakeDamage(100);
+        }
         if (!characterController.isGrounded)
         {
             moveDirection.y -= gravity * Time.fixedDeltaTime;
@@ -232,5 +238,15 @@ public class CharacterVR : MonoBehaviour
         dir.Normalize();
         if (dir.y < 0) dir.y = -dir.y;
         slideImpact += dir.normalized * force / mass;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("JumpPad"))
+        {
+            moveDirection.y = jumpSpeed * 3;
+            MusicManager.Spring();
+            ppManager.StartDash();
+        }
     }
 }

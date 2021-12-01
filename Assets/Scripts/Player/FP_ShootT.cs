@@ -63,11 +63,18 @@ public class FP_ShootT : MonoBehaviour
         {
             ShootHit(hit);
             if (hit.collider.GetComponent<Flesh>() != null) hit.collider.GetComponent<Flesh>().TakeDamage(damage);
+            if (hit.collider.gameObject.CompareTag("Target")) StartCoroutine(ShotTrueFalseTarget(hit));
         }
         else
         {
             Shoot();
         }
+    }
+    IEnumerator ShotTrueFalseTarget(RaycastHit hit)
+    {
+        hit.collider.GetComponent<Animator>().SetBool("Shot", true);
+        yield return new WaitForEndOfFrame();
+        hit.collider.GetComponent<Animator>().SetBool("Shot", false);
     }
 
     IEnumerator Reload()

@@ -35,8 +35,6 @@ public class Enemy : MonoBehaviour
     {
         agent = gameObject.AddComponent<NavMeshAgent>();
         flesh = gameObject.AddComponent<Flesh>();
-
-        LoadSettings();
     }
     void PlayEngineSound()
     {
@@ -44,6 +42,8 @@ public class Enemy : MonoBehaviour
     }
     private void Start()
     {
+        LoadSettings();
+
         player = GameObject.FindGameObjectWithTag("Player");
         maxDistance = Random.Range(maxDistanceA, maxDistanceB);
         StartCoroutine(SetDestinationCheck());
@@ -159,6 +159,7 @@ public class Enemy : MonoBehaviour
 
     void LoadSettings()
     {
+        Debug.Log(memory);
         typeEnemy = memory.typeEnemy;
 
         agent.speed = memory.speed;

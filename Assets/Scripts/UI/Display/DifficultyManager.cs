@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DifficultyManager : MonoBehaviour
 {
@@ -8,18 +9,46 @@ public class DifficultyManager : MonoBehaviour
     [Range(1, 13)] public int popups;
     [Range(0, 100)] public float percentage;
     int[] serverNums = new int[4];
-    int brokenServers = 0;
+    public int brokenServers = 0;
     public bool stageFinished = false;
 
     GameObject[] mainMonitors;
 
+    [SerializeField] GameObject superPC;
+
     private void Awake()
     {
         mainMonitors = GameObject.FindGameObjectsWithTag("ServerMonitor");
+
+        Debug.Log(SeneManagement.hard);
+        if (SeneManagement.hard)
+        {
+            speed = 450;
+            popups = 13;
+        }
+
     }
     private void Start()
     {
-        Bugging(); StartCoroutine(SlowUpdate());
+
+        if (SceneManager.GetActiveScene().buildIndex
+            != SceneUtility.GetBuildIndexByScenePath("Assets/Scenes/Tutorial_Server.unity"))
+            Bugging(); StartCoroutine(SlowUpdate());
+    }
+    private void FixedUpdate()
+    {
+        if(brokenServers <= 0)
+        {
+            superPC.GetComponent<Renderer>().materials[2].SetColor("_EmissionColor", Color.green);
+            for (int i = 0; i < 2; i++)
+            {
+                superPC.transform.GetChild(4 + i).gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            superPC.GetComponent<Renderer>().materials[2].SetColor("_EmissionColor", Color.red);
+        }
     }
     void Bugging()
     {

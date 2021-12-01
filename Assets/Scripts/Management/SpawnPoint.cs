@@ -17,6 +17,7 @@ public class SpawnPoint : MonoBehaviour
 
     void Start()
     {
+        spawnedCount = 0;
         manager = transform.parent.GetComponent<SpawnpointManager>();
         player = GameObject.FindGameObjectWithTag("Player");
         render = GetComponent<Renderer>();
@@ -66,6 +67,20 @@ public class SpawnPoint : MonoBehaviour
         }
         else if (bug) enemy = Resources.Load("AI/Bug") as GameObject;
         else return;
+
+        if (SeneManagement.hard)
+        {
+            if (enemy.GetComponent<Enemy>().memory == Resources.Load("AI/Presets/Bomber-Normal"))
+            {
+                enemy.GetComponent<Enemy>().memory = Resources.Load("AI/Presets/Bomber-Hard")
+                    as Enemy_Behaviour;
+            }
+            else if (enemy.GetComponent<Enemy>().memory == Resources.Load("AI/Presets/Shooter-Normal"))
+            {
+                enemy.GetComponent<Enemy>().memory = Resources.Load("AI/Presets/Shooter-Hard")
+                    as Enemy_Behaviour;
+            }
+        }
 
         Instantiate(enemy, transform.position, transform.rotation);
         spawnedCount++;

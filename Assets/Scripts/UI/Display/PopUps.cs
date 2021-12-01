@@ -11,7 +11,7 @@ public class PopUps : MonoBehaviour
     KeyWord[] panelsTr;
     GameObject[] panels;
     [HideInInspector]public bool ready, passed;
-    void Awake()
+    void Start()
     {
         dm = GameObject.FindGameObjectWithTag("Difficulty").GetComponent<DifficultyManager>();
         speed = dm.speed; popups = dm.popups; percentage = dm.percentage;
