@@ -31,6 +31,7 @@ public class Character : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        lookSpeed = SeneManagement.sensitivity;
         lookSpeedBase = lookSpeed;
     }
 

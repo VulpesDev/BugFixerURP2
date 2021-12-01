@@ -40,7 +40,7 @@ public class MusicManager : MonoBehaviour
             AudioSource ASound = Sound.AddComponent<AudioSource>();
             ASound.clip = i == 0 ? Resources.Load("Sounds/Player/LaserShot") as AudioClip :
                 Resources.Load("Sounds/Player/1911Colt") as AudioClip;
-            //ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
+            ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
             ASound.pitch = Random.Range(0.9f, 1.2f);
             ASound.Play();
             Sound.AddComponent<AudiosDefault>();
@@ -52,7 +52,7 @@ public class MusicManager : MonoBehaviour
         Sound.transform.parent = player;
         AudioSource ASound = Sound.AddComponent<AudioSource>();
         ASound.clip = Resources.Load("Sounds/Player/Air_Discharge") as AudioClip;
-        //ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
+        ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
         ASound.pitch = Random.Range(0.9f, 1.2f);
         ASound.Play();
         Sound.AddComponent<AudiosDefault>();
@@ -63,7 +63,7 @@ public class MusicManager : MonoBehaviour
         Sound.transform.parent = player;
         AudioSource ASound = Sound.AddComponent<AudioSource>();
         ASound.clip = Resources.Load("Sounds/Player/Air_Discharge") as AudioClip;
-        //ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
+        ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
         ASound.pitch = Random.Range(0.3f, 0.5f);
         ASound.Play();
         Sound.AddComponent<AudiosDefault>();
@@ -74,7 +74,7 @@ public class MusicManager : MonoBehaviour
         Sound.transform.parent = player;
         AudioSource ASound = Sound.AddComponent<AudioSource>();
         ASound.clip = Resources.Load("Sounds/Player/TommyGun") as AudioClip;
-        //ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
+        ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
         ASound.volume = 0.7f;
         ASound.pitch = Random.Range(0.9f, 1.2f);
         ASound.Play();
@@ -86,7 +86,7 @@ public class MusicManager : MonoBehaviour
         Sound.transform.parent = player;
         AudioSource ASound = Sound.AddComponent<AudioSource>();
         ASound.clip = Resources.Load("Sounds/Player/ReloadSound") as AudioClip;
-        //ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
+        ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
         ASound.pitch = Random.Range(0.9f, 1.2f);
         ASound.Play();
         Sound.AddComponent<AudiosDefault>();
@@ -97,7 +97,7 @@ public class MusicManager : MonoBehaviour
         Sound.transform.parent = player;
         AudioSource ASound = Sound.AddComponent<AudioSource>();
         ASound.clip = Resources.Load("Sounds/Player/ReloadInitialization") as AudioClip;
-        //ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
+        ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
         ASound.pitch = Random.Range(0.9f, 1.2f);
         ASound.Play();
         Sound.AddComponent<AudiosDefault>();
@@ -108,7 +108,7 @@ public class MusicManager : MonoBehaviour
         Sound.transform.parent = player;
         AudioSource ASound = Sound.AddComponent<AudioSource>();
         ASound.clip = Resources.Load("Sounds/Player/DashSound") as AudioClip;
-        //ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
+        ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
         ASound.pitch = Random.Range(0.9f, 1.2f);
         ASound.Play();
         Sound.AddComponent<AudiosDefault>();
@@ -125,7 +125,7 @@ public class MusicManager : MonoBehaviour
         Sound.transform.position = position;
         AudioSource ASound = Sound.AddComponent<AudioSource>();
         ASound.clip = Resources.Load("Sounds/Enviroment/BugExplosion") as AudioClip;
-        //ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
+        ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
         ASound.spatialBlend = 1;
         ASound.minDistance = 10;
         ASound.maxDistance = 40;
@@ -141,7 +141,7 @@ public class MusicManager : MonoBehaviour
         Sound.transform.position = position;
         AudioSource ASound = Sound.AddComponent<AudioSource>();
         ASound.clip = Resources.Load("Sounds/Player/LaserShot") as AudioClip;
-        //ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
+        ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
         ASound.spatialBlend = 1;
         ASound.minDistance = 10;
         ASound.maxDistance = 40;
@@ -155,7 +155,7 @@ public class MusicManager : MonoBehaviour
         Sound.transform.parent = interactions;
         AudioSource ASound = Sound.AddComponent<AudioSource>();
         ASound.clip = Resources.Load("Sounds/Enviroment/UI/BasicUI") as AudioClip;
-        //ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
+        ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
         ASound.pitch = Random.Range(0.9f, 1.2f);
         ASound.Play();
         Sound.AddComponent<AudiosDefault>();
@@ -166,7 +166,7 @@ public class MusicManager : MonoBehaviour
         Sound.transform.parent = interactions;
         AudioSource ASound = Sound.AddComponent<AudioSource>();
         ASound.clip = Resources.Load("Sounds/Enviroment/UI/PopUp") as AudioClip;
-        //ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
+        ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
         ASound.pitch = Random.Range(0.9f, 1.2f);
         ASound.Play();
         Sound.AddComponent<AudiosDefault>();
@@ -177,7 +177,7 @@ public class MusicManager : MonoBehaviour
         Sound.transform.parent = interactions;
         AudioSource ASound = Sound.AddComponent<AudioSource>();
         ASound.clip = Resources.Load("Sounds/Enviroment/UI/CorrectUI") as AudioClip;
-        //ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
+        ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
         ASound.pitch = Random.Range(0.9f, 1.2f);
         ASound.Play();
         Sound.AddComponent<AudiosDefault>();
@@ -188,7 +188,7 @@ public class MusicManager : MonoBehaviour
         Sound.transform.parent = interactions;
         AudioSource ASound = Sound.AddComponent<AudioSource>();
         ASound.clip = Resources.Load("Sounds/Enviroment/UI/IncorrectUI") as AudioClip;
-        //ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
+        ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
         ASound.pitch = Random.Range(0.9f, 1.2f);
         ASound.Play();
         Sound.AddComponent<AudiosDefault>();
@@ -199,7 +199,7 @@ public class MusicManager : MonoBehaviour
         Sound.transform.parent = interactions;
         AudioSource ASound = Sound.AddComponent<AudioSource>();
         ASound.clip = Resources.Load("Sounds/Enviroment/Hit") as AudioClip;
-        //ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
+        ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
         ASound.pitch = Random.Range(0.9f, 1.2f);
         ASound.Play();
         Sound.AddComponent<AudiosDefault>();
@@ -210,7 +210,7 @@ public class MusicManager : MonoBehaviour
         Sound.transform.parent = interactions;
         AudioSource ASound = Sound.AddComponent<AudioSource>();
         ASound.clip = Resources.Load("Sounds/Enviroment/Spring") as AudioClip;
-        //ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
+        ASound.outputAudioMixerGroup = Resources.Load<AudioMixer>("Sounds/Master").FindMatchingGroups("Master")[0];
         ASound.pitch = Random.Range(1.2f, 1.6f);
         ASound.Play();
         Sound.AddComponent<AudiosDefault>();

@@ -19,10 +19,19 @@ public class DifficultyManager : MonoBehaviour
     private void Awake()
     {
         mainMonitors = GameObject.FindGameObjectsWithTag("ServerMonitor");
+
+        Debug.Log(SeneManagement.hard);
+        if (SeneManagement.hard)
+        {
+            speed = 450;
+            popups = 13;
+        }
+
     }
     private void Start()
     {
-       if(SceneManager.GetActiveScene().buildIndex
+
+        if (SceneManager.GetActiveScene().buildIndex
             != SceneUtility.GetBuildIndexByScenePath("Assets/Scenes/Tutorial_Server.unity"))
             Bugging(); StartCoroutine(SlowUpdate());
     }

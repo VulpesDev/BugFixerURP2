@@ -79,7 +79,7 @@ public class KeyWord : MonoBehaviour
         {
             foreach (KeyCode lastHitKey in System.Enum.GetValues(typeof(KeyCode)))
             {
-                if (Input.GetKey(lastHitKey))
+                if (Input.GetKeyDown(lastHitKey))
                 {
                     if (requested == lastHitKey)
                     {

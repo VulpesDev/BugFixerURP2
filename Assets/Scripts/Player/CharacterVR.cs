@@ -59,6 +59,8 @@ public class CharacterVR : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        lookSpeed = SeneManagement.sensitivity * 2.0f;
+
         lookSpeedBase = lookSpeed;
 
         baseHeight = characterController.height;
