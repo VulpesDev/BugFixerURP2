@@ -30,6 +30,11 @@ public class FP_Interaction : MonoBehaviour
                     SceneManager.LoadScene(SceneUtility.GetBuildIndexByScenePath
                         ("Assets/Scenes/VR_Level.unity"));
                 }
+                else if (target.CompareTag("FinishMonitor2"))
+                {
+                    SceneManager.LoadScene(SceneUtility.GetBuildIndexByScenePath
+                        ("Assets/Scenes/Server_Level.unity"));
+                }
             }
         }
         Debug.DrawRay(rayTr.position, rayTr.forward * distance, Color.red);

@@ -22,6 +22,8 @@ public class Flesh : MonoBehaviour
     {
         if(GetComponent<Enemy>() != null)
         {
+            GameObject.FindGameObjectWithTag("SpawnManager")
+                .GetComponent<SpawnpointManager>().killed++;
             if(GetComponent<Enemy>().typeEnemy == Enemy_Behaviour.EnemyType.Shooter)
             {
                 GameObject g = Resources.Load("AI/Bug-Dead") as GameObject;
@@ -54,6 +56,5 @@ public class Flesh : MonoBehaviour
                 }
             }
         }
-        //temporary
     }
 }

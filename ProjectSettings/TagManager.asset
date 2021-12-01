@@ -10,6 +10,10 @@ TagManager:
   - UI_Canvas
   - Enemy
   - FinishMonitor
+  - SpawnManager
+  - FinishMonitor2
+  - JumpPad
+  - Target
   layers:
   - Default
   - TransparentFX

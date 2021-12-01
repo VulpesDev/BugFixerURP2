@@ -233,4 +233,14 @@ public class CharacterVR : MonoBehaviour
         if (dir.y < 0) dir.y = -dir.y;
         slideImpact += dir.normalized * force / mass;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("JumpPad"))
+        {
+            moveDirection.y = jumpSpeed * 3;
+            MusicManager.Spring();
+            ppManager.StartDash();
+        }
+    }
 }

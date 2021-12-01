@@ -17,6 +17,7 @@ public class SpawnPoint : MonoBehaviour
 
     void Start()
     {
+        spawnedCount = 0;
         manager = transform.parent.GetComponent<SpawnpointManager>();
         player = GameObject.FindGameObjectWithTag("Player");
         render = GetComponent<Renderer>();
