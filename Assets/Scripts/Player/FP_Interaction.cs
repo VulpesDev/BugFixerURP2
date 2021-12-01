@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FP_Interaction : MonoBehaviour
 {
@@ -23,6 +24,11 @@ public class FP_Interaction : MonoBehaviour
                     .broken)
                 {
                     targetTr.GetChild(0).GetComponent<StatusManager>().PlayMinigame();
+                }
+                else if (target.CompareTag("FinishMonitor"))
+                {
+                    SceneManager.LoadScene(SceneUtility.GetBuildIndexByScenePath
+                        ("Assets/Scenes/VR_Level.unity"));
                 }
             }
         }

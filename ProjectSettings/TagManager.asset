@@ -9,6 +9,7 @@ TagManager:
   - ServerMonitor
   - UI_Canvas
   - Enemy
+  - FinishMonitor
   layers:
   - Default
   - TransparentFX

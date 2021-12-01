@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/VR_Level_Test.unity
-    guid: 2038c62254801cb4ba691585bc796699
+    path: Assets/Scenes/Server_Level 1.unity
+    guid: 27b7379107b7f4f4b802dbf5b54c1758
+  - enabled: 1
+    path: Assets/Scenes/VR_Level.unity
+    guid: ad36899bb23f78c47b88ee09d0586236
   m_configObjects: {}
