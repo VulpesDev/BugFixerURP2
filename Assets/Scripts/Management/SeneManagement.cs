@@ -34,4 +34,9 @@ public class SeneManagement : MonoBehaviour
         SceneManager.LoadScene(
             SceneUtility.GetBuildIndexByScenePath("Assets/Scenes/Server_Level.unity"));
     }
+    public void LoadTutorialLevel()
+    {
+        SceneManager.LoadScene(
+            SceneUtility.GetBuildIndexByScenePath("Assets/Scenes/Tutorial_VR.unity"));
+    }
 }
